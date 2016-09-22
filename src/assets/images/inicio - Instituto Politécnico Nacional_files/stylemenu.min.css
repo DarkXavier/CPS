@@ -1,0 +1,15 @@
+﻿a{text-decoration:none}.menu{width:100%;max-width:1170px;margin:10px auto;background:#6d6d6d;min-height:40px}.menu ul{margin:0 auto!important;width:89%;list-style-type:none;padding:0;display:block}
+.toggleMenu{display:none}.nav{list-style:none;*zoom:1}.nav:before,.nav:after{content:" ";display:table}.nav:after{clear:both}
+.nav ul{list-style:none;width:16em!important}.nav a{padding:10px 15px;color:#faf3f3;font-size:15px}.nav li{position:relative}.nav>li{float:left}.nav>li>.parent{background-image:url("http://www.movil.ipn.mx/Style%20Library/Images/downArrow.png");background-repeat:no-repeat;background-position:right;margin-right:3px}
+.nav li li .parent{background-image:url("http://www.movil.ipn.mx/Style%20Library/Images/downArrow.png");background-repeat:no-repeat;background-position:95% 50%}.nav>li>a{display:block}
+.nav li ul{position:absolute;left:-9999px}.nav>li.hover>ul{left:0;color:#560528;clear:both}.nav li li.hover ul{left:100%;top:0;clear:both}.nav li li a{display:block;background:#e8e9e8;position:relative;z-index:100;border-top:1px solid #fff;font-size:14px;color:#121110}
+.nav li li li a{background:#b4b3b1;z-index:200;border-top:1px solid #fff}.ancla a{background:#b4b3b1!important;z-index:200;color:#fff;border-top:1px solid #fff!important}
+.nav li .hover>.parent{background-position:95% 50%;color:#560528;border-left:5px solid #560528}.nav li li .hover{background-position:95% 50%;background:#af829b}
+@media screen and (max-width:1158px){.nav a{padding:10px 12px}.nav>li>a{font-size:13px}}@media screen and (max-width:1080px){.nav>li>a{font-size:14px}
+}@media screen and (max-width:1032px){.nav>li>a{font-size:13px}.menu ul{width:92%}}@media screen and (max-width:1032px){.nav a{padding:10px 11px}.nav>li>a{font-size:14px}
+}@media screen and (max-width:975px){.menu ul{width:95%}}@media screen and (max-width:850px){.menu ul{width:100%}.active{display:block}.nav{background:#e8e9e8}
+.nav a{color:#504f51}.nav>li{float:none}.nav>li{border-top:1px solid #fff}.nav .hover>.parent{background-position:95% 50%;color:#560528;border-left:5px solid}
+.nav li li a{background:#dadcda;color:#121110}.nav li li .parent{background-image:url("http://www.movil.ipn.mx/Style%20Library/Images/downArrow.png");background-repeat:no-repeat;background-position:95% 50%}
+.nav li li li a{background:#c7c7c7}.nav ul{display:block;width:100%!important}.nav>li.hover>ul,.nav li li.hover ul{position:static}.menu{background:#cecece}
+.toggleMenu{color:#dadad9!important;width:110px;-moz-box-shadow:0 10px 14px -7px #d4d4d4;-webkit-box-shadow:0 10px 14px -7px #d4d4d4;box-shadow:0 10px 14px -7px #d4d4d4;background:#690e23 url("http://www.movil.ipn.mx/Style%20Library/Images/menu49.png") no-repeat;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee',endColorstr='#dad5d5',GradientType=0);display:inline-block;cursor:pointer;font-family:Arial;font-size:14pt;padding:15px 46px;text-decoration:none;text-shadow:0 1px 0 #5b8a3c;margin:0 10px;min-height:50px}
+}

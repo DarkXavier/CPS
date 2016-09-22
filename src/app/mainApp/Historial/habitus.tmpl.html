@@ -1,0 +1,203 @@
+<div layout="column">
+    <md-card flex="100" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
+        <img src="assets/images/backgrounds/material-backgrounds/mb-bg-ipnCenter2-narrow.png" alt="Card Image">
+        <md-card-content>
+            <div layout="row" align="center">
+                <md-input-container flex="25">
+                    <img src="assets/images/files/IPN.png">
+                </md-input-container>
+                <md-input-container flex="50">
+                    <div layout="column">
+                        <h2>Instituto Politécnico Nacional</h2>
+                        <h3>La Técnica al Servicio de la Patria</h3>
+                        <h4>Carnet de Servicios Politécnicos</h4>
+                        <h1>Habitus</h1>
+                    </div>
+                </md-input-container>
+                <md-input-container flex="25">
+                    <img src="assets/images/files/SEP.png" >
+                </md-input-container>
+            </div>
+        </md-card-content>
+    </md-card>
+
+    <md-card class="md-padding card1"  md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}" flex="100">
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Búsqueda de Paciente</span>
+            </md-card-title-text>
+
+        </md-card-title>
+        <md-card-content>
+            <md-autocomplete
+                    class="margin-bottom-20"
+                    ng-disabled="vm.isDisabled"
+                    md-no-cache="vm.noCache"
+                    md-selected-item="selectedItem"
+                    md-search-text-change="vm.searchTextChange(vm.searchText)"
+                    md-search-text="vm.searchText"
+                    md-selected-item-change="vm.selectedItemChange(item)"
+                    md-items="item in vm.querySearch(vm.searchText)"
+                    md-item-text="item.display"
+                    md-min-length="0"
+                    placeholder="Digite el nombre del Paciente">
+                <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.display}}</span>
+            </md-autocomplete>
+        </md-card-content>
+    </md-card>
+    <md-card flex="100" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
+        <div flex="" layout="row" layout-align="center center" layout-fill="">
+            <div flex="100" layout="column" tri-wizard="" class="md-whiteframe-z1 margin-bottom-100">
+                <md-toolbar class="md-primary">
+                    <div flex layout="column" class="md-toolbar-tools">
+                        <div flex layout="column">
+                            <div flex layout="row" layout-sm="column" layout-align-sm="center center"
+                                 layout-align="space-between center">
+                                <h2 translate="">Habitus Exterior</h2>
+                            </div>
+                            <div flex layout="row" layout-sm="column" layout-align-sm="center center"
+                                 layout-align="space-between center">
+                                <h3 translate="">{{vm.steps[triWizard.currentStep]}}</h3>
+                                <h3 translate="">{{vm.FondeoLabel}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <md-progress-linear md-mode="determinate" ng-value="vm.completed"
+                                        class="md-accent padding-bottom-10"></md-progress-linear>
+                </md-toolbar>
+                <md-tabs layout-fill="" md-selected="triWizard.currentStep" md-dynamic-height=""
+                         md-stretch-tabs="always" class="md-primary">
+                    <md-tab id="cabeza">
+                        <md-tab-label><span class="oxy-step-label">1</span><span translate="">Cabeza</span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <div class="wizard layout-padding">
+
+                                <md-input-container flex class="md-block">
+                                    <text-angular name="cabeza" ng-model="habitus.cabeza"
+                                                  ta-target-toolbars="editor-toolbar"
+                                                  ta-toolbar="[['bold','italics','ul','ol']]"></text-angular>
+                                </md-input-container>
+
+                                <text-angular-toolbar name="editor-toolbar" class="email-dialog-editor-toolbar"
+                                                      ta-toolbar-active-button-class="active"></text-angular-toolbar>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="cuello" ng-disabled="projectInfo.$invalid">
+                        <md-tab-label><span class="oxy-step-label">2</span><span translate="">Cuello</span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <div class="wizard layout-padding">
+
+                                <md-input-container flex class="md-block">
+                                    <text-angular name="cuello" ng-model="habitus.cuello"
+                                                  ta-target-toolbars="editor-toolbar"
+                                                  ta-toolbar="[['bold','italics','ul','ol']]"></text-angular>
+                                </md-input-container>
+
+                                <text-angular-toolbar name="editor-toolbar" class="email-dialog-editor-toolbar"
+                                                      ta-toolbar-active-button-class="active"></text-angular-toolbar>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="torax" ng-disabled="projectInfo.$invalid">
+                        <md-tab-label><span class="oxy-step-label">3</span><span translate="">Torax</span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <div class="wizard layout-padding">
+
+                                <md-input-container flex class="md-block">
+                                    <text-angular name="torax" ng-model="habitus.torax"
+                                                  ta-target-toolbars="editor-toolbar"
+                                                  ta-toolbar="[['bold','italics','ul','ol']]"></text-angular>
+                                </md-input-container>
+
+                                <text-angular-toolbar name="editor-toolbar" class="email-dialog-editor-toolbar"
+                                                      ta-toolbar-active-button-class="active"></text-angular-toolbar>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="abdomen" ng-disabled="projectInfo.$invalid">
+                        <md-tab-label><span class="oxy-step-label">4</span><span translate="">Abdomen</span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <div class="wizard layout-padding">
+
+                                <md-input-container flex class="md-block">
+                                    <text-angular name="abdomen" ng-model="habitus.abdomen"
+                                                  ta-target-toolbars="editor-toolbar"
+                                                  ta-toolbar="[['bold','italics','ul','ol']]"></text-angular>
+                                </md-input-container>
+
+                                <text-angular-toolbar name="editor-toolbar" class="email-dialog-editor-toolbar"
+                                                      ta-toolbar-active-button-class="active"></text-angular-toolbar>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="miembro" ng-disabled="projectInfo.$invalid">
+                        <md-tab-label><span class="oxy-step-label">5</span><span translate="">Miembros</span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <div class="wizard layout-padding">
+
+                                <md-input-container flex class="md-block">
+                                    <text-angular name="miembros" ng-model="habitus.miembros"
+                                                  ta-target-toolbars="editor-toolbar"
+                                                  ta-toolbar="[['bold','italics','ul','ol']]"></text-angular>
+                                </md-input-container>
+
+                                <text-angular-toolbar name="editor-toolbar" class="email-dialog-editor-toolbar"
+                                                      ta-toolbar-active-button-class="active"></text-angular-toolbar>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab id="genitales" ng-disabled="projectInfo.$invalid">
+                        <md-tab-label><span class="oxy-step-label">6</span><span translate="">Genitales</span>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <div class="wizard layout-padding">
+
+                                <md-input-container flex class="md-block">
+                                    <text-angular name="genitales" ng-model="habitus.genitales"
+                                                  ta-target-toolbars="editor-toolbar"
+                                                  ta-toolbar="[['bold','italics','ul','ol']]"></text-angular>
+                                </md-input-container>
+
+                                <text-angular-toolbar name="editor-toolbar" class="email-dialog-editor-toolbar"
+                                                      ta-toolbar-active-button-class="active"></text-angular-toolbar>
+                            </div>
+                        </md-tab-body>
+                    </md-tab>
+
+                </md-tabs>
+                <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
+                    <div layout-fill="" layout-padding="" layout="row" layout-align="end center" class="wizard-navbar">
+                        <md-button ng-click="triWizard.prevStep()" ng-hide="triWizard.currentStep &gt; 3"
+                                   ng-disabled="triWizard.prevStepDisabled()" translate="Anterior"
+                                   class="md-primary md-raised"></md-button>
+                        <md-button ng-click="triWizard.nextStep()"
+                                   ng-hide="triWizard.progress == 100 &amp;&amp; triWizard.currentStep &gt;= 3"
+                                   ng-disabled="triWizard.nextStepDisabled()" translate="Siguiente"
+                                   class="md-primary md-raised"></md-button>
+                        <md-button ng-click="vm.registrarFondeo()"
+                                   ng-show="triWizard.progress == 100 &amp;&amp; triWizard.currentStep &gt;= 3 "
+                                   translate="Enviar" class="md-accent md-raised"></md-button>
+                        <md-button ng-click="vm.createDialog()" ng-show="vm.fondeo.id!=null"
+                                   translate="FONDEOS.WIZARD.DELETE" class="md-warn md-raised"></md-button>
+                        <md-button ng-click="vm.cancel()" ng-show="vm.fondeo.id!=null" wtranslate="Dejar de Editar"
+                                   class="md-primary md-raised"></md-button>
+                        <md-button ng-click="vm.cancel()" ng-show="vm.fondeo.id==null" translate="Limpiar Campos"
+                                   class="md-primary md-raised"></md-button>
+                    </div>
+                </md-card>
+            </div>
+
+
+        </div>
+    </md-card>
+    <!-- wizard-->
+
+
+</div>
+</div>
