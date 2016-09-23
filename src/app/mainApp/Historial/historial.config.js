@@ -10,29 +10,7 @@
     function moduleConfig($stateProvider, triMenuProvider){
         $stateProvider
 
-            .state('triangular.admin-default.habitus', { //Nombre del state
-                url: '/habitus', //Nombre que quiero en mi url
-                templateUrl: 'app/mainApp/Historial/habitus.tmpl.html', //Dirección del archivo a usar
-                controller: 'habitusController', //nombre del controlador
-                controllerAs: 'vm' //se renombra al scope
 
-            })
-
-            .state('triangular.admin-default.signos', { //Nombre del state
-                url: '/signos', //Nombre que quiero en mi url
-                templateUrl: 'app/mainApp/Historial/signos.tmpl.html', //Dirección del archivo a usar
-                controller: 'signosController', //nombre del controlador
-                controllerAs: 'vm' //se renombra al scope
-
-            })
-
-            .state('triangular.admin-default.antecedentesFamiliares', { //Nombre del state
-                url: '/antecedentes_familiares', //Nombre que quiero en mi url
-                templateUrl: 'app/mainApp/Historial/antecedentesFamiliares.tmpl.html', //Dirección del archivo a usar
-                controller: 'antecedentesFamiliaresController', //nombre del controlador
-                controllerAs: 'vm' //se renombra al scope
-
-            })
             .state('triangular.admin-default.antecedentesPersonales', { //Nombre del state
                 url: '/antecedentes_personales', //Nombre que quiero en mi url
                 templateUrl: 'app/mainApp/Historial/antecedentesPersonales.tmpl.html', //Dirección del archivo a usar
@@ -54,13 +32,6 @@
                 //controllerAs:'vm'
             })
 
-            .state('triangular.admin-default.indicadores',{
-                url:'/indicadores',
-                templateUrl:'app/mainApp/Historial/indicador.html',
-                controller:'indicadoresController',
-                controllerAs:'vm'
-            })
-
             .state('triangular.admin-default.carnetreview',{
                 url:'/carnet',
                 templateUrl:'app/mainApp/Historial/carnetreview.tmpl.html',
@@ -71,67 +42,102 @@
 
 
         triMenuProvider.addMenu({
-            name: 'Historial CLinico',
-            icon: 'fa fa-archive',
+            name: 'Servicio Medico',
+            icon: 'fa fa-medkit',
             type: 'dropdown',
             priority: 6.1,
             children: [{
-                name: 'Interrogatorio',
+                name: 'Historia Clinica',
+                icon:'zmdi zmdi-hospital-alt',
                 type: 'dropdown',
                 priority: 6.1,
                 children:[{
-                    name: 'Antecedentes Personales',
+                    name: 'Alergias',
+                    state: 'triangular.admin-default.alergias',
+                    type: 'link'
+
+                },{
+                    name: 'Enfermedades Cronico Degenerativas',
                     state: 'triangular.admin-default.antecedentesPersonales',
                     type: 'link'
 
                 },{
-                    name: 'Antecedentes Familiares',
-                    state: 'triangular.admin-default.antecedentesFamiliares',
-                    type: 'link'
-
-                },]
-            }, {
-                name: 'Exploración Fisica',
-                type: 'dropdown',
-                priority: 6.1,
-                children:[{
-                    name: 'Habitus Exterior',
-                    state: 'triangular.admin-default.habitus',
+                    name: 'Esquema de Vacunación',
+                    state: 'triangular.admin-default.vacunas',
                     type: 'link'
 
                 },{
-                    name: 'Signos Vitales',
-                    state: 'triangular.admin-default.signos',
+                    name: 'Citas Previas',
+                    state: 'triangular.admin-default.lastCitas',
                     type: 'link'
 
-                },]
-            },{
-                name: 'Análisis de Laboratorio',
-                state: 'triangular.admin-default.analisis',
-                type: 'link'
+                },{
+                    name: 'Contacto',
+                    state: 'triangular.admin-default.datosContacto',
+                    type: 'link'
+
+                }]
             }, {
-                name: 'Eventos Previos',
-                state: 'triangular.admin-default.eventosPrevios',
-                type: 'link'
-            },
-                {
+                name: 'Servicio Médico',
+                icon:'fa fa-stethoscope',
+                type: 'dropdown',
+                priority: 6.1,
+                children:[{
+                    name: 'Cita Médica',
+                    state: 'triangular.admin-default.citas',
+                    type: 'link'
+
+                },{
                     name: 'Consulta Médica',
                     state: 'triangular.admin-default.consulta',
                     type: 'link'
-                }, {
-                    name: 'Datos de Contacto',
-                    state: 'triangular.admin-default.datosContacto',
-                    type: 'link'
-                }, {
-                    name: 'Indicadores',
-                    state: 'triangular.admin-default.indicadores',
-                    type: 'link'
-                }, {
+                }]
+            }, {
+                name: 'Atención Rápida',
+                icon:'fa fa-ambulance',
+                type: 'dropdown',
+                children: [{
                     name: 'Lectura del Carnet',
                     state: 'triangular.admin-default.carnetreview',
                     type: 'link'
-                }
-
+                }]
+            },{
+                name: 'Administración',
+                icon:'fa fa-cog',
+                type: 'dropdown',
+                children: [{
+                    name: 'Gestión Usuarios',
+                    state: 'triangular.admin-default.carnetreview',
+                    type: 'link'
+                },{
+                    name: 'Gestión Unidad de Atencion',
+                    state: 'triangular.admin-default.unidades',
+                    type: 'link'
+                },{
+                    name: 'Gestíon de Consultorios',
+                    state: 'triangular.admin-default.carnetreview',
+                    type: 'link'
+                },
+                ]
+            },{
+                name: 'Catalogos',
+                icon:'fa fa-archive',
+                type: 'dropdown',
+                children: [{
+                    name: 'Catálogo de Vacunas',
+                    state: 'triangular.admin-default.carnetreview',
+                    type: 'link'
+                },{
+                    name: 'Catálogo de Enfermedades',
+                    state: 'triangular.admin-default.unidades',
+                    type: 'link'
+                },{
+                    name: 'Cátalogo de Alergias',
+                    state: 'triangular.admin-default.carnetreview',
+                    type: 'link'
+                },
+                ]
+            },
             ]
         });
 
