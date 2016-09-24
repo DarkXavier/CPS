@@ -1,5 +1,5 @@
 /**
- * Created by franciscojaviercerdamartinez on 13/08/16.
+ * Created by franciscojaviercerdamartinez on 22/09/16.
  */
 (function () {
     'use strict';
@@ -92,52 +92,7 @@
                     state: 'triangular.admin-default.consulta',
                     type: 'link'
                 }]
-            }, {
-                name: 'Atención Rápida',
-                icon:'fa fa-ambulance',
-                type: 'dropdown',
-                children: [{
-                    name: 'Lectura del Carnet',
-                    state: 'triangular.admin-default.carnetreview',
-                    type: 'link'
-                }]
-            },{
-                name: 'Administración',
-                icon:'fa fa-cog',
-                type: 'dropdown',
-                children: [{
-                    name: 'Gestión Usuarios',
-                    state: 'triangular.admin-default.carnetreview',
-                    type: 'link'
-                },{
-                    name: 'Gestión Unidad de Atencion',
-                    state: 'triangular.admin-default.unidades',
-                    type: 'link'
-                },{
-                    name: 'Gestíon de Consultorios',
-                    state: 'triangular.admin-default.carnetreview',
-                    type: 'link'
-                },
-                ]
-            },{
-                name: 'Catalogos',
-                icon:'fa fa-archive',
-                type: 'dropdown',
-                children: [{
-                    name: 'Catálogo de Vacunas',
-                    state: 'triangular.admin-default.carnetreview',
-                    type: 'link'
-                },{
-                    name: 'Catálogo de Enfermedades',
-                    state: 'triangular.admin-default.unidades',
-                    type: 'link'
-                },{
-                    name: 'Cátalogo de Alergias',
-                    state: 'triangular.admin-default.carnetreview',
-                    type: 'link'
-                },
-                ]
-            },
+            }
             ]
         });
 
