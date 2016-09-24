@@ -1,0 +1,71 @@
+{
+    "development": {
+        "EnvironmentConfig": {
+            "deploy": {
+                "accessKeyId": "",
+                "secretAccessKey": "",
+                "region": "",
+                "params": {
+                    "Bucket": ""
+                }
+            },
+            "site": {
+                "debug": true,
+                "staging": true,
+                "rest": {
+                    //"api": "http://genesis-dev-ses.sssirsa.com/"
+                    "api": "http://52.207.209.213/"
+                },
+                "oauth": {
+                    "clientId": "OlU2WyqlkxW92Fk2Pthr4oUtnyJuRTavLCtrQvyOQD0KPWYP4jT",
+                    "clientSecret":"MMcRxDMyQOCgaJ5BlQpEiY6S9EXKNGGfOQuymureDA05abnihO8BqkP7IcCyvkaW2KSEHTKM0OvGZ"
+                }
+            }
+        }
+    },
+    "staging": {
+        "EnvironmentConfig": {
+            "deploy": {
+                "accessKeyId": "",
+                "secretAccessKey": "",
+                "region": "",
+                "params": {
+                    "Bucket": ""
+                }
+            },
+            "site": {
+                "debug": true,
+                "staging": true,
+                "rest": {
+                    "api": "http://52.207.209.213/"
+                },
+                "oauth": {
+                    "clientId": "OlU2WyqlkxW92Fk2Pthr4oUtnyJuRTavLCtrQvyOQD0KPWYP4jT",
+                    "clientSecret":"MMcRxDMyQOCgaJ5BlQpEiY6S9EXKNGGfOQuymureDA05abnihO8BqkP7IcCyvkaW2KSEHTKM0OvGZ"
+                }
+            }
+        }
+    },
+    "production": {
+        "EnvironmentConfig": {
+            "deploy": {
+                "accessKeyId": "",
+                "secretAccessKey": "",
+                "region": "",
+                "params": {
+                    "Bucket": ""
+                }
+            },
+            "site": {
+                "debug": true,
+                "staging": true,
+                "rest": {
+                    "api": "http://52.207.209.213/"
+                },
+                "oauth": {
+                    "clientId": ""
+                }
+            }
+        }
+    }
+}
