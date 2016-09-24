@@ -5,7 +5,7 @@
 
 
     angular.module('app.mainApp',[
-        
+        'app.mainApp.login',
         'app.mainApp.historial',
         'app.mainApp.administracion',
         'app.mainApp.catalogos',
