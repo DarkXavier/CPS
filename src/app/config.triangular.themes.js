@@ -175,7 +175,7 @@
         .sidebarTheme('dark')
         .toolbarTheme('dark')
         .logoTheme('dark')
-        .contentTheme('dark');
+        .contentTheme('blue-grey');
 
         // BATTLESHIP GREY SKIN
         triThemingProvider.theme('blue-grey')
