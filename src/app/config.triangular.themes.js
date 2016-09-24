@@ -29,9 +29,9 @@
         });
 
         $mdThemingProvider.definePalette('black', {
-            '50': '75263C',
-            '100': '75263C',
-            '200': '75263C',
+            '50': 'ffffff',
+            '100': 'ffffff',
+            '200': 'ffffff',
             '300': '75263C',
             '400': '75263C',
             '500': '75263C',
@@ -39,8 +39,8 @@
             '700': '75263C',
             '800': '75263C',
             '900': '75263C',
-            'A100': '75263C',
-            'A200': 'ffffff',
+            'A100': 'ffffff',
+            'A200': '75263C',
             'A400': 'ffffff',
             'A700': 'ffffff',
             'contrastDefaultColor': 'light'
