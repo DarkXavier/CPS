@@ -38,9 +38,9 @@
             //  roles: ['Administrador']
             //},
             // set the html template to show on this page
-            templateUrl: 'app/mainApp/Catalogos/unidadServicio/unidadServicio.tmpl.html',
+            templateUrl: 'app/mainApp/Catalogos/unidadAcademica/unidadAcademica.tmpl.html',
             // set the controller to load for this page
-            controller: 'UnidadServicioController',
+            controller: 'UnidadAcademicaController',
             controllerAs: 'vm'
         });
 

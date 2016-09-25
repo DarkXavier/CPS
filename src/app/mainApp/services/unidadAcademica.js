@@ -6,9 +6,9 @@
 
     angular
         .module('app.mainApp')
-        .factory('UnidadServicio',UnidadServicio);
+        .factory('UnidadAcademica',UnidadAcademica);
 
-    function UnidadServicio(Restangular)
+    function UnidadAcademica(Restangular)
     {
         var baseEnfermedad= Restangular.all('unidad_academica');
 

@@ -3,7 +3,7 @@
         <md-card-content>
             <div layout="row" flex="" layout-align="space-around stretch" id="cabecera">
                 <h2 flex="70" flex-sm="100" flex-gt-xs="100" translate=""
-                    class="md-headline-1 text-center">Unidades de Servicio</h2>
+                    class="md-headline-1 text-center">Unidades Académicas</h2>
                 <md-button aria-label="fab button" class="md-fab md-scale md-fab-top-right" ng-click="vm.cancel()">
                     <md-icon md-font-icon="fa fa-plus" ng-style="{color: 'white'}">
 
@@ -23,7 +23,7 @@
                                      md-search-text-change="vm.search(vm.searchText)"
                                      md-search-text="vm.searchText"
                                      md-menu-class="autocomplete-custom-template"
-                                     md-floating-label="Búsqueda de unidades de servicio">
+                                     md-floating-label="Búsqueda de unidades académicas">
                         <span
                                 md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.nombre}}</span>
                         <md-item-template><span class="item-title">
@@ -31,18 +31,18 @@
                         <span>&nbsp; {{item.nombre}}</span>
                         </span><span class="item-metadata">
                             <span class="item-metastat">
-                                <strong>{{item.direccion }}</strong>
+                                <strong>{{item.descripcion }}</strong>
                             </span>
                         </span>
                         </md-item-template>
-                        <md-not-found><span>No se encontró la unidad de servicio</span></md-not-found>
+                        <md-not-found><span>No se encontró la Unidad Académica</span></md-not-found>
                     </md-autocomplete>
                     <md-virtual-repeat-container class="vertical-container" flex="flex">
                         <md-list>
-                            <md-list-item ng-repeat="unidad in vm.unidades_servicio | unidadSearch:vm.searchText">
+                            <md-list-item ng-repeat="unidad in vm.unidades_academicas | unidadSearch:vm.searchText">
                                 <md-button ng-click="vm.selectedItems(unidad)"
                                            ng-class="{'selected' : unidad === vm.selectedList }">
-                                    <md-icon md-svg-icon="assets/images/unidades_servicio.svg" class="avatar"></md-icon>
+                                    <md-icon md-svg-icon="assets/images/unidades_academ.svg" class="avatar"></md-icon>
                                     <span flex="flex">{{unidad.nombre }}</span>
                                 </md-button>
                                 <md-divider></md-divider>
@@ -63,14 +63,6 @@
                             <input ng-required='true' type="text" name="nombre"
                                    ng-model="vm.unidadAcademica.nombre"/>
                             <div ng-messages="UnidadForm.nombre.$error">
-                                <div ng-message="required">{{'MAIN.LABEL.REQUIRED'|translate}}</div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-block">
-                            <label>Dirección</label>
-                            <input md-no-asterisk="" required="" type="text" name="address"
-                                   ng-model="vm.unidadAcademica.direccion"/>
-                            <div ng-messages="UnidadForm.address.$error">
                                 <div ng-message="required">{{'MAIN.LABEL.REQUIRED'|translate}}</div>
                             </div>
                         </md-input-container>
