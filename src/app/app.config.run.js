@@ -7,7 +7,7 @@
     angular
         .module('app')
         .run(Run);
-    function Run($rootScope, $state, OAuth, OAuthToken, $http, Bienvenida,PersonaLocalService){
+    function Run($rootScope){
 
         $rootScope.$on('$stateChangeSuccess',function(event,destination){
            /* $http.defaults.headers.common['Authorization'] = 'Bearer '+OAuthToken.getToken().access_token;

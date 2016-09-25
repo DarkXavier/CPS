@@ -1,0 +1,70 @@
+<div layout="column" flex="100" layout-padding layout-fill>
+    <md-card class="md-padding-card1" flex-gt-md="90" flex="100" layout="column">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h1>{{'Vaccines.Header'|translate}}</h1>
+            </div>
+        </md-toolbar>
+        <div layout-gt-md="row" layout="column">
+            <!--Autocomplete div-->
+            <div layout="column" layout-align="space-between stretch" flex-gt-md="30" flex="100">
+
+                <md-autocomplete
+                        md-items="item in vm.filteredVaccines"
+                        md-selected-item="vm.selectedVaccine"
+                        md-selected-item-change="vm.selectedItemChange(item)"
+                        md-search-text-change="vm.search(vm.searchParameter)"
+                        md-search-text="vm.searchParameter"
+                        md-item-text="item.descripcion"
+                        md-min-length="1"
+                        md-floating-label="{{'Vaccines.Fields.Search'|translate}}">
+                    <md-item-template>
+                        <span>{{item.descripcion}}</span>
+                    </md-item-template>
+                </md-autocomplete>
+
+                <md-virtual-repeat-container flex="flex" hide layout-fill show-gt-md style="min-height:350px">
+                    <div flex md-virtual-repeat="item in vm.filteredVaccines">
+                        <div flex="flex"
+                             ng-click="vm.clickCopy(item)"
+                             layout-padding layout="row"
+                             layout-align="start center" >
+                            <md-icon md-font-icon="zmdi zmdi-case" flex="20"></md-icon>
+                            <span flex="80">{{item.descripcion}}</span>
+                        </div>
+                    </div>
+                </md-virtual-repeat-container>
+
+
+            </div>
+            <!--Content div-->
+            <div layout="column" flex-gt-md="70" flex="100">
+                <h2>{{'Vaccines.Fields.Information'|translate}}</h2>
+                <form name="formVaccine" novalidate>
+                    <md-input-container class="md-block">
+                        <label>{{'Vaccines.Fields.VaccineName'|translate}}</label>
+                        <input name="VaccineName" type="text" required="" md-no-asterisk=""
+                               ng-model="vm.vaccine.descripcion">
+                        <div ng-messages="formVaccine.VaccineName.$error">
+                            <div ng-message="required">{{'Vaccines.Errors.Required'|translate}}</div>
+                        </div>
+                    </md-input-container>
+                </form>
+            </div>
+        </div>
+        <md-actions layout="row" layout-align="end center">
+            <md-button ng-click="vm.clear()" md-no-ink class="md-raised md-primary">
+                <md-icon md-font-icon="fa fa-eraser"></md-icon>
+            </md-button>
+            <md-button ng-if="vm.vaccine.id!=null && vm.vaccine.id!=undefined" ng-click="vm.remove()" md-no-ink class="md-raised md-primary">
+                <md-icon md-font-icon="fa fa-trash"></md-icon>
+            </md-button>
+            <md-button ng-if="vm.vaccine.id!=null && vm.vaccine.id!=undefined" ng-click="vm.update()" md-no-ink class="md-raised md-primary" ng-disabled="formClient.$invalid">
+                <md-icon md-font-icon="fa fa-pencil"></md-icon>
+            </md-button>
+            <md-button ng-if="vm.vaccine.id==null || vm.vaccine.id==undefined" ng-click="vm.create()" md-no-ink class="md-raised md-primary" ng-disabled="formClient.$invalid">
+                <md-icon md-font-icon="fa fa-save"></md-icon>
+            </md-button>
+        </md-actions>
+    </md-card>
+</div>
