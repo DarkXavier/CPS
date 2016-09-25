@@ -25,13 +25,18 @@
             username: '',
             password: ''
         };
+        loginClick();
 
         function loginClick() {
+            vm.user={
+                username:"adan92",
+                password:"1234567a"
+            };
             var options={
                 secure:false
             };
             OAuth.getAccessToken(vm.user,options).then(function(res){
-                $state.go('triangular.admin-default.bienvenida');
+                $state.go('triangular.admin-default.consulta');
             }).catch(function(err){
                 toastr.error('Usuario o Contraseña incorrectos','Error',err.data.error);
                 console.log(err);

@@ -10,7 +10,7 @@
 
     function UnidadServicio(Restangular)
     {
-        var baseEnfermedad= Restangular.all('unidad_servicio');
+        var baseEnfermedad= Restangular.all('unidad_academica');
 
         return {
             list:list,

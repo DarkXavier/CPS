@@ -25,12 +25,11 @@
         vm.update=update;
         vm.search_items = [];
         vm.searchText = '';
-        var unidadServicio = {
+        var unidadAcademica = {
             nombre: null,
-            direccion: null,
-            descripcion: null
+            direccion: null
         };
-        vm.unidadServicio = angular.copy(unidadServicio);
+        vm.unidadAcademica = angular.copy(unidadAcademica);
         vm.numberBuffer = '';
         activate();
         init();
@@ -61,7 +60,7 @@
                 .ok('Aceptar')
                 .cancel('Cancelar');
             $mdDialog.show(confirm).then(function() {
-                UnidadServicio.remove(vm.unidadServicio).then(function (res) {
+                UnidadServicio.remove(vm.unidadAcademica).then(function (res) {
                     toastr.success(vm.successDeleteMessage, vm.successTitle);
                     cancel();
                     activate();
@@ -73,7 +72,7 @@
             });
         }
         function update() {
-            UnidadServicio.update(vm.unidadServicio).then(function (res) {
+            UnidadServicio.update(vm.unidadAcademica).then(function (res) {
                 toastr.success(vm.successUpdateMessage, vm.successTitle);
                 cancel();
                 activate();
@@ -82,9 +81,9 @@
             });
         }
         function create() {
-            UnidadServicio.create(vm.unidadServicio).then(function (res) {
+            UnidadServicio.create(vm.unidadAcademica).then(function (res) {
                 toastr.success(vm.successCreateMessage, vm.successTitle);
-                vm.unidadServicio = angular.copy(unidadServicio);
+                vm.unidadAcademica = angular.copy(unidadAcademica);
                 cancel();
                 activate();
             }).catch(function (res) {
@@ -95,13 +94,13 @@
         function cancel() {
             $scope.UnidadForm.$setPristine();
             $scope.UnidadForm.$setUntouched();
-            vm.unidadServicio = angular.copy(unidadServicio);
+            vm.unidadAcademica = angular.copy(unidadAcademica);
             vm.selectedList = null;
         }
 
         function selectedItems(project) {
             vm.selectedList = project;
-            vm.unidadServicio = angular.copy(project);
+            vm.unidadAcademica = angular.copy(project);
         }
 
         function querySearch(query) {

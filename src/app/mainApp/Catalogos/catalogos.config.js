@@ -7,7 +7,7 @@
         .config(moduleConfig);
 
     function moduleConfig($stateProvider, triMenuProvider, $translatePartialLoaderProvider) {
-        $translatePartialLoaderProvider.addPart('app/mainApp/catalogos');
+        $translatePartialLoaderProvider.addPart('app/mainApp/Catalogos');
         $stateProvider
     .state('triangular.admin-default.enfermedad', {
             // set the url of this page
@@ -23,6 +23,17 @@
         }).state('triangular.admin-default.unidad-servicio', {
             // set the url of this page
             url: '/unidadServicio',
+            //data: {
+            //  roles: ['Administrador']
+            //},
+            // set the html template to show on this page
+            templateUrl: 'app/mainApp/Catalogos/unidadServicio/unidadServicio.tmpl.html',
+            // set the controller to load for this page
+            controller: 'UnidadServicioController',
+            controllerAs: 'vm'
+        }).state('triangular.admin-default.unidad-academicas', {
+            // set the url of this page
+            url: '/unidadAcademica',
             //data: {
             //  roles: ['Administrador']
             //},
