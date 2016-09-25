@@ -27,7 +27,6 @@
             'A700': 'ffffff',
             'contrastDefaultColor': 'dark'
         });
-
         $mdThemingProvider.definePalette('black', {
             '50': '#eceff1',
             '100': '#cfd8dc',
@@ -256,7 +255,6 @@
          *  This overrides any skin set in a call to triSkinsProvider.setSkin if there is a cookie
          *  REMOVE LINE BELOW FOR PRODUCTION SITE
          */
-        triSkinsProvider.useSkinCookie(true);
 
         /**
          *  SET DEFAULT SKIN
