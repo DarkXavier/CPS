@@ -11,7 +11,7 @@
         $stateProvider
     .state('triangular.admin-default.enfermedad', {
             // set the url of this page
-            url: '/lineaTransporte',
+            url: '/enfermedad',
             //data: {
               //  roles: ['Administrador']
             //},
@@ -42,6 +42,12 @@
             // set the controller to load for this page
             controller: 'UnidadAcademicaController',
             controllerAs: 'vm'
+        }).state('triangular.admin-default.alergia', {
+            url: '/alergia',
+            templateUrl: 'app/mainApp/Catalogos/alergia/alergia.tmpl.html',
+            // set the controller to load for this page
+            controller: 'AlergiaController',
+            controllerAs: 'vm'
         });
 
 
@@ -59,7 +65,7 @@
                     type: 'link'
                 },{
                     name: 'Cátalogo de Alergias',
-                    state: 'triangular.admin-default.carnetreview',
+                    state: 'triangular.admin-default.alergia',
                     type: 'link'
                 },{
                     name: 'Cátalogo de Unidades de Servicio',

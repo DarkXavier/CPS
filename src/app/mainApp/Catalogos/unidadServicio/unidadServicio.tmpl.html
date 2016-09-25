@@ -63,7 +63,7 @@
                             <input ng-required='true' type="text" name="nombre"
                                    ng-model="vm.unidadServicio.nombre"/>
                             <div ng-messages="UnidadForm.nombre.$error">
-                                <div ng-message="required">{{'MAIN.LABEL.REQUIRED'|translate}}</div>
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block">
@@ -71,7 +71,7 @@
                             <input md-no-asterisk="" required="" type="text" name="address"
                                    ng-model="vm.unidadServicio.direccion"/>
                             <div ng-messages="UnidadForm.address.$error">
-                                <div ng-message="required">{{'MAIN.LABEL.REQUIRED'|translate}}</div>
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
                         </md-input-container>
 
@@ -80,7 +80,7 @@
                             <input md-no-asterisk="" required="" type="text" name="descripcion"
                                    ng-model="vm.unidadServicio.descripcion"/>
                             <div ng-messages="UnidadForm.descripcion.$error">
-                                <div ng-message="required">{{'MAIN.LABEL.REQUIRED'|translate}}</div>
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
                         </md-input-container>
                     </form>

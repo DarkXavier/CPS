@@ -7,10 +7,10 @@
 
     angular
         .module('app.mainApp.catalogos')
-        .controller('UnidadAcademicaController',UnidadAcademicaController);
+        .controller('AlergiaController',AlergiaController);
 
     /* @ngInject */
-    function UnidadAcademicaController(UnidadAcademica,$scope, toastr, Translate,$mdDialog,OAuth) {
+    function AlergiaController(Alergia,$scope, toastr, Translate,$mdDialog) {
 
         var vm = this;
 
@@ -24,11 +24,11 @@
         vm.update=update;
         vm.search_items = [];
         vm.searchText = '';
-        var unidadAcademica = {
+        var alergia = {
             nombre: null,
             descripcion: null
         };
-        vm.unidadAcademica = angular.copy(unidadAcademica);
+        vm.alergia = angular.copy(alergia);
         vm.numberBuffer = '';
         activate();
         init();
@@ -45,7 +45,7 @@
         }
 
         function activate() {
-            vm.unidades_academicas=UnidadAcademica.list();
+            vm.alergias=Alergia.list();
         }
         function showRegister($event) {
             clearForm();
@@ -59,7 +59,7 @@
                 .ok('Aceptar')
                 .cancel('Cancelar');
             $mdDialog.show(confirm).then(function() {
-                UnidadAcademica.remove(vm.unidadAcademica).then(function (res) {
+                Alergia.remove(vm.alergia).then(function (res) {
                     toastr.success(vm.successDeleteMessage, vm.successTitle);
                     cancel();
                     activate();
@@ -71,7 +71,7 @@
             });
         }
         function update() {
-            UnidadAcademica.update(vm.unidadAcademica).then(function (res) {
+            Alergia.update(vm.alergia).then(function (res) {
                 toastr.success(vm.successUpdateMessage, vm.successTitle);
                 cancel();
                 activate();
@@ -80,9 +80,9 @@
             });
         }
         function create() {
-            UnidadAcademica.create(vm.unidadAcademica).then(function (res) {
+            Alergia.create(vm.alergia).then(function (res) {
                 toastr.success(vm.successCreateMessage, vm.successTitle);
-                vm.unidadAcademica = angular.copy(unidadAcademica);
+                vm.alergia = angular.copy(alergia);
                 cancel();
                 activate();
             }).catch(function (res) {
@@ -91,25 +91,25 @@
         }
 
         function cancel() {
-            $scope.UnidadForm.$setPristine();
-            $scope.UnidadForm.$setUntouched();
-            vm.unidadAcademica = angular.copy(unidadAcademica);
+            $scope.AlergiaForm.$setPristine();
+            $scope.AlergiaForm.$setUntouched();
+            vm.alergia = angular.copy(alergia);
             vm.selectedList = null;
         }
 
         function selectedItems(project) {
             vm.selectedList = project;
-            vm.unidadAcademica = angular.copy(project);
+            vm.alergia = angular.copy(project);
         }
 
         function querySearch(query) {
-            var results = query ? lookup(query) : vm.unidades_academicas;
+            var results = query ? lookup(query) : vm.alergias;
             return results;
 
         }
 
         function lookup(search_text) {
-            vm.search_items = _.filter(vm.unidades_academicas, function (item) {
+            vm.search_items = _.filter(vm.alergias, function (item) {
                 return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
             });
             return vm.search_items;
