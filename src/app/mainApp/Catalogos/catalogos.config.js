@@ -20,7 +20,19 @@
             // set the controller to load for this page
             controller: 'EnfermedadController',
             controllerAs: 'vm'
+        }).state('triangular.admin-default.unidad-servicio', {
+            // set the url of this page
+            url: '/unidadServicio',
+            //data: {
+            //  roles: ['Administrador']
+            //},
+            // set the html template to show on this page
+            templateUrl: 'app/mainApp/Catalogos/unidadServicio/unidadServicio.tmpl.html',
+            // set the controller to load for this page
+            controller: 'UnidadServicioController',
+            controllerAs: 'vm'
         });
+
 
         triMenuProvider.addMenu({
                 name: 'Catalogos',
@@ -37,6 +49,14 @@
                 },{
                     name: 'Cátalogo de Alergias',
                     state: 'triangular.admin-default.carnetreview',
+                    type: 'link'
+                },{
+                    name: 'Cátalogo de Unidades de Servicio',
+                    state: 'triangular.admin-default.unidad-servicio',
+                    type: 'link'
+                },{
+                    name: 'Cátalogo de Unidades Académicas',
+                    state: 'triangular.admin-default.unidad-academicas',
                     type: 'link'
                 }
 
