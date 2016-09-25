@@ -28,9 +28,28 @@
             'contrastDefaultColor': 'dark'
         });
         $mdThemingProvider.definePalette('black', {
-            '50': 'ffffff',
-            '100': 'ffffff',
-            '200': 'ffffff',
+            '50': '#eceff1',
+            '100': '#cfd8dc',
+            '200': '#b0bec5',
+            '300': '#90a4ae',
+            '400': '#78909c',
+            '500': '#75263C',
+            '600': '#546e7a',
+            '700': '#455a64',
+            '800': '#37474f',
+            '900': '#263238',
+            'A100': '#cfd8dc',
+            'A200': '#b0bec5',
+            'A400': '#78909c',
+            'A700': '#455a64',
+            'contrastDefaultColor': 'light',
+            'contrastDarkColors': '50 100 200 300 A100 A200',
+            'contrastStrongLightColors': '400 500 700'
+        });
+        $mdThemingProvider.definePalette('ipn', {
+            '50': '75263C',
+            '100': '75263C',
+            '200': '75263C',
             '300': '75263C',
             '400': '75263C',
             '500': '75263C',
@@ -38,28 +57,13 @@
             '700': '75263C',
             '800': '75263C',
             '900': '75263C',
-            'A100': 'ffffff',
-            'A200': '75263C',
+            'A100': '75263C',
+            'A200': 'ffffff',
             'A400': 'ffffff',
             'A700': 'ffffff',
-            'contrastDefaultColor': 'light'
-        });
-        $mdThemingProvider.definePalette('ipn', {
-            '50': '3a3a3a',
-            '100': '3a3a3a',
-            '200': '3a3a3a',
-            '300': '3a3a3a',
-            '400': '3a3a3a',
-            '500': '3a3a3a',
-            '600': '3a3a3a',
-            '700': '75263C',
-            '800': '3a3a3a',
-            '900': '3a3a3a',
-            'A100': '3a3a3a',
-            'A200': '3a3a3a',
-            'A400': '3a3a3a',
-            'A700': '3a3a3a',
-            'contrastDefaultColor': 'light'
+            'contrastDefaultColor': 'light',
+            'contrastStrongLightColors': '50 100 200 300 A100',
+            'contrastDarkColors': 'A200 A400 A700'
         });
 
 
@@ -68,15 +72,11 @@
             'contrastLightColors': '500 700 800 900',
             'contrastStrongLightColors': '500 700 800 900'
         });
-        var triIPNMap = $mdThemingProvider.extendPalette('ipn', {
-            'contrastDefaultColor': 'light',
-            'contrastLightColors': '500 700 800 900',
-            'contrastStrongLightColors': '500 700 800 900'
-        });
+
 
         // Register the new color palette map with the name triCyan
         $mdThemingProvider.definePalette('triCyan', triCyanMap);
-        $mdThemingProvider.definePalette('ipn', triIPNMap);
+
         /**
          *  SKINS
          */
@@ -116,29 +116,8 @@
         triSkinsProvider.skin('red-dwarf', 'Red Dwarf')
         .sidebarTheme('purple')
         .toolbarTheme('white-red')
-        .logoTheme('ipn')
+        .logoTheme('purple')
         .contentTheme('purple');
-
-        //IPN SKIN
-
-        triThemingProvider.theme('ipn-skin')
-            .primaryPalette('ipn')
-            .accentPalette('ipn')
-            .warnPalette('ipn');
-
-        triThemingProvider.theme('white-ipn')
-            .primaryPalette('white')
-            .accentPalette('ipn', {
-                'default': '500'
-            })
-            .warnPalette('ipn');
-
-        triSkinsProvider.skin('ipn-skin', 'IPN')
-            .sidebarTheme('#75263C')
-            .toolbarTheme('#75263C')
-            .logoTheme('#75263C')
-            .contentTheme('#75263C');
-
 
         // PLUMB PURPLE SKIN
         triThemingProvider.theme('purple')
@@ -161,20 +140,38 @@
 
         // DARK KNIGHT SKIN
         triThemingProvider.theme('dark')
-        .primaryPalette('black', {
+        .primaryPalette('ipn', {
             'default': '300',
             'hue-1': '400'
         })
         .accentPalette('amber')
         .warnPalette('deep-orange')
-        .backgroundPalette('black')
+        .backgroundPalette('ipn')
         .dark();
+
 
         triSkinsProvider.skin('dark-knight', 'Dark Knight')
         .sidebarTheme('dark')
         .toolbarTheme('dark')
         .logoTheme('dark')
-        .contentTheme('dark');
+        //IPN
+        triThemingProvider.theme('IPN')
+            .primaryPalette('ipn', {
+                'default': '300',
+                'hue-1': '400'
+            })
+            .accentPalette('amber')
+            .warnPalette('deep-orange')
+            .backgroundPalette('ipn')
+            .dark();
+
+
+        triSkinsProvider.skin('politecnico', 'Politecnico')
+            .sidebarTheme('IPN')
+            .toolbarTheme('IPN')
+            .logoTheme('IPN')
+
+
 
         // BATTLESHIP GREY SKIN
         triThemingProvider.theme('blue-grey')
@@ -262,6 +259,6 @@
         /**
          *  SET DEFAULT SKIN
          */
-        triSkinsProvider.setSkin('dark-knight');
+        triSkinsProvider.setSkin('politecnico');
     }
 })();
