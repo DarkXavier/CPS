@@ -39,7 +39,7 @@
         activate();
 
         function activate() {
-            vm.successTitle=Translate.translate('Vaccines.Notify.Success');
+            /*vm.successTitle=Translate.translate('Vaccines.Notify.Success');
             vm.errorTitle=Translate.translate('Vaccines.Notify.Error');
             vm.warningTitle=Translate.translate('Vaccines.Notify.Warning');
             vm.listErrorMessage=Translate.translate('Vaccines.Notify.Messages.ERROR_GETTING_PROJECTS');
@@ -48,7 +48,16 @@
             vm.errorRemove=Translate.translate('Vaccines.Notify.Messages.ERROR_REMOVING_PROJECT');
             vm.successRemove=Translate.translate('Vaccines.Notify.Messages.SUCCESS_REMOVING_PROJECT');
             vm.errorUpdate=Translate.translate('Vaccines.Notify.Messages.ERROR_UPDATING_PROJECT');
-            vm.successUpdate=Translate.translate('Vaccines.Notify.Messages.SUCCESS_UPDATING_PROJECT');
+            vm.successUpdate=Translate.translate('Vaccines.Notify.Messages.SUCCESS_UPDATING_PROJECT');*/
+            vm.successTitle="Éxito";
+            vm.errorTitle="Error";
+            vm.listErrorMessage="Error al obtener listado de vacunas";
+            vm.errorCreate="Error al crear vacunas";
+            vm.succesCreate="Éxito al crear vacuna";
+            vm.errorRemove="Error al eliminar vacuna";
+            vm.successRemove="Éxito al eliminar vacuna";
+            vm.errorUpdate="Error al actualizar vacuna";
+            vm.successUpdate="Éxito al actualizar vacuna";
             vm.vaccines=Vacunas.getAll();
             vm.filteredVaccines=vm.vaccines;
         }
