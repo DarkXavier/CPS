@@ -123,9 +123,24 @@
             name: 'Camarones'
         }
         ];
+        vm.types = [{
+            id: '1',
+            value: 'General'
+
+        }, {
+            id: '2',
+            value: 'Dentista'
+        },{
+            id: '3',
+            value: 'Psicología'
+        },{
+            id: '4',
+            value: 'Orientacion'
+        }
+        ];
         vm.enfermedades = [{
             id: '1',
-            name: 'Asma'
+            value: 'Asma'
 
 
         }
