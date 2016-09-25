@@ -7,6 +7,10 @@
  */
 
 var gutil = require('gulp-util');
+var path = require('path'),
+    gulp = require('gulp'),
+    conf = require('./conf'),
+    gulpNgConfig = require('gulp-ng-config');
 
 /**
  *  Wiredep is the lib which inject bower dependencies in your project
