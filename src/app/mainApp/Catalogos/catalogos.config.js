@@ -6,7 +6,22 @@
         .module('app.mainApp.catalogos')
         .config(moduleConfig);
 
-    function moduleConfig($stateProvider, triMenuProvider) {
+    function moduleConfig($stateProvider, triMenuProvider, $translatePartialLoaderProvider) {
+        $translatePartialLoaderProvider.addPart('app/mainApp/catalogos');
+        $stateProvider
+    .state('triangular.admin-default.enfermedad', {
+            // set the url of this page
+            url: '/lineaTransporte',
+            //data: {
+              //  roles: ['Administrador']
+            //},
+            // set the html template to show on this page
+            templateUrl: 'app/mainApp/Catalogos/EnfermedadesCronicas/enfermedad.tmpl.html',
+            // set the controller to load for this page
+            controller: 'EnfermedadController',
+            controllerAs: 'vm'
+        });
+
         triMenuProvider.addMenu({
                 name: 'Catalogos',
                 icon:'fa fa-archive',
@@ -17,7 +32,7 @@
                     type: 'link'
                 },{
                     name: 'Catálogo de Enfermedades',
-                    state: 'triangular.admin-default.unidades',
+                    state: 'triangular.admin-default.enfermedad',
                     type: 'link'
                 },{
                     name: 'Cátalogo de Alergias',

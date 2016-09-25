@@ -22,6 +22,34 @@
     </md-card>
 
     <div flex="90" layout='column'>
+       <md-card>
+           <md-card-title>
+               <md-card-title-text>
+                   <span class="md-headline">Búsqueda de Paciente</span>
+               </md-card-title-text>
+
+           </md-card-title>
+           <md-card-content>
+               <md-card-content>
+                   <md-autocomplete
+                           class="margin-bottom-20"
+                           ng-disabled="vm.isDisabled"
+                           md-no-cache="vm.noCache"
+                           md-selected-item="selectedItem"
+                           md-search-text-change="vm.searchTextChange(vm.searchText)"
+                           md-search-text="vm.searchText"
+                           md-selected-item-change="vm.selectedItemChange(item)"
+                           md-items="item in vm.querySearch(vm.searchText)"
+                           md-item-text="item.display"
+                           md-min-length="0"
+                           placeholder="Digite el nombre del Paciente">
+                       <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.display}}</span>
+                   </md-autocomplete>
+
+
+               </md-card-content>
+           </md-card-content>
+       </md-card>
         <!--Datos Personales-->
         <div flex="100">
             <md-card class="md-padding card1" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">

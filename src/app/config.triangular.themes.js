@@ -63,8 +63,8 @@
             'A400': 'ffffff',
             'A700': 'ffffff',
             'contrastDefaultColor': 'light',
-            'contrastDarkColors': '50 100 200 300 A100',
-            'contrastStrongLightColors': 'A200 A200 A200'
+            'contrastStrongLightColors': '50 100 200 300 A100',
+            'contrastDarkColors': 'A200 A400 A700'
         });
 
 
