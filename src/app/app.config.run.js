@@ -7,36 +7,43 @@
     angular
         .module('app')
         .run(Run);
-    function Run($rootScope, $state, OAuth, OAuthToken, $http, Bienvenida,PersonaLocalService){
+    function Run($rootScope,  OAuth, AuthService,authorization, $window, OAuthToken,$http,$state){
+        $rootScope.$on('$stateChangeStart',function(event, toState, toStateParams){
 
-        $rootScope.$on('$stateChangeSuccess',function(event,destination){
-           /* $http.defaults.headers.common['Authorization'] = 'Bearer '+OAuthToken.getToken().access_token;
+            if(AuthService.isAuthenticated()) {
+                AuthService.getUser();
 
-            Bienvenida.getPersona().then(function(res){
-                PersonaLocalService.persona = res;
-            }).catch(function(err){
-                console.log(err);
-            });
-
-            Bienvenida.getRole().then(function(res){
-                PersonaLocalService.role=res[0];
-            }).catch(function(){
-                console.log(err);
-            });
-
+            }
             if(!OAuth.isAuthenticated()){
                 OAuth.getRefreshToken().then(
-                    function(res){
-
+                    function(){
+                        $http.defaults.headers.common['Authorization'] = 'Bearer '+OAuthToken.getToken().access_token;
                     }
                 ).catch(
-                    function(err){
+                    function(){
                         //Uncomment for enable user validation
-                        $state.go('login')
+                        $state.go('login');
                     }
-                )
-            }*/
+                );
+            }
+            $rootScope.toState = toState;
+            $rootScope.toStateParams = toStateParams;
+            if (AuthService.isIdentityResolved()) {
+                authorization.authorize();
+            }
         });
+        $rootScope.$on('oauth:error',function(event, rejection) {
+            if ('invalid_grant' === rejection.data.error) {
+                return;
+            }
+
+            // Refresh token when a `invalid_token` error occurs.
+            if ('invalid_token' === rejection.data.error) {
+                return OAuth.getRefreshToken();
+            }
+            return $window.location.href = '/login';
+        });
+
 
     }
 })();

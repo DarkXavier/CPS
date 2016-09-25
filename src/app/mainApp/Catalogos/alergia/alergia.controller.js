@@ -7,9 +7,10 @@
 
     angular
         .module('app.mainApp.catalogos')
-        .controller('EnfermedadController',EnfermedadController);
+        .controller('AlergiaController',AlergiaController);
 
-    function EnfermedadController(Enfermedad,$scope, toastr, Translate,$mdDialog) {
+    /* @ngInject */
+    function AlergiaController(Alergia,$scope, toastr, Translate,$mdDialog) {
 
         var vm = this;
 
@@ -23,11 +24,11 @@
         vm.update=update;
         vm.search_items = [];
         vm.searchText = '';
-        var enfermedad = {
+        var alergia = {
             nombre: null,
             descripcion: null
         };
-        vm.enfermedad = angular.copy(enfermedad);
+        vm.alergia = angular.copy(alergia);
         vm.numberBuffer = '';
         activate();
         init();
@@ -44,7 +45,7 @@
         }
 
         function activate() {
-            vm.enfermedades=Enfermedad.list();
+            vm.alergias=Alergia.list();
         }
         function showRegister($event) {
             clearForm();
@@ -58,7 +59,7 @@
                 .ok('Aceptar')
                 .cancel('Cancelar');
             $mdDialog.show(confirm).then(function() {
-                Enfermedad.remove(vm.enfermedad).then(function (res) {
+                Alergia.remove(vm.alergia).then(function (res) {
                     toastr.success(vm.successDeleteMessage, vm.successTitle);
                     cancel();
                     activate();
@@ -70,7 +71,7 @@
             });
         }
         function update() {
-            Enfermedad.update(vm.enfermedad).then(function (res) {
+            Alergia.update(vm.alergia).then(function (res) {
                 toastr.success(vm.successUpdateMessage, vm.successTitle);
                 cancel();
                 activate();
@@ -79,9 +80,9 @@
             });
         }
         function create() {
-            Enfermedad.create(vm.enfermedad).then(function (res) {
+            Alergia.create(vm.alergia).then(function (res) {
                 toastr.success(vm.successCreateMessage, vm.successTitle);
-                vm.enfermedad = angular.copy(enfermedad);
+                vm.alergia = angular.copy(alergia);
                 cancel();
                 activate();
             }).catch(function (res) {
@@ -90,25 +91,25 @@
         }
 
         function cancel() {
-            $scope.EnfermedadForm.$setPristine();
-            $scope.EnfermedadForm.$setUntouched();
-            vm.enfermedad = angular.copy(enfermedad);
+            $scope.AlergiaForm.$setPristine();
+            $scope.AlergiaForm.$setUntouched();
+            vm.alergia = angular.copy(alergia);
             vm.selectedList = null;
         }
 
         function selectedItems(project) {
             vm.selectedList = project;
-            vm.enfermedad = angular.copy(project);
+            vm.alergia = angular.copy(project);
         }
 
         function querySearch(query) {
-            var results = query ? lookup(query) : vm.enfermedades;
+            var results = query ? lookup(query) : vm.alergias;
             return results;
 
         }
 
         function lookup(search_text) {
-            vm.search_items = _.filter(vm.enfermedades, function (item) {
+            vm.search_items = _.filter(vm.alergias, function (item) {
                 return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
             });
             return vm.search_items;
