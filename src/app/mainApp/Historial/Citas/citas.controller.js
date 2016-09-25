@@ -8,7 +8,7 @@
         .module('app.mainApp.historial')
         .controller('CitasController', CitasController);
 
-    function CitasController($timeout, $q, $log, $rootScope, $mdDialog, $mdToast, $filter, triLayout, uiCalendarConfig) {
+    function CitasController($timeout, $q, $log, $rootScope,triTheming , $mdDialog, $mdToast, $filter, triLayout, uiCalendarConfig) {
         var vm = this;
         vm.pacientes = [
             {
@@ -37,7 +37,10 @@
                 foto: ""
 
             }];
+        vm.fecha_inicio = null;
+        vm.fecha_fin = null;
         vm.calendarOptions = {
+            defaultView: 'agendaWeek',
             contentHeight: 'auto',
             selectable: true,
             editable: false,
@@ -63,34 +66,30 @@
                 vm.currentDay = date;
             },
             eventClick: function (calEvent, jsEvent, view) { //eslint-disable-line
+                /*console.log(calEvent._id);
+                console.log(calEvent);*/
 
-                $mdDialog.show({
-                    controller: 'EditarSolicitudDialogController',
-                    controllerAs: 'vm',
-                    templateUrl: 'app/mainApp/solicitudes/calendario/modal/editarSolicitud.dialog.tmpl.html',
-                    targetEvent: jsEvent,
-                    focusOnOpen: false,
-                    locals: {
-                        dialogData: {
-                            title: 'Editar Solicitud',
-                            confirmButtonText: 'Save'
-                        },
-                        event: calEvent,
-                        edit: true
-                    }
-                }).then(function (event) {
-                    var toastMessage = 'Se actualizo correctamente la solicitud';
-                    //uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('updateEvent', event);
-                    uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('refetchEvents');
-                    activate();
-                    // pop a toast
-                    $mdToast.show(
-                        $mdToast.simple()
-                            .content($filter('triTranslate')(toastMessage))
-                            .position('bottom right')
-                            .hideDelay(2000)
-                    );
-                });
+                eliminar(calEvent._id);
+            },
+            events: function (start, end, callback) {
+                vm.fecha_inicio = moment();
+                vm.fecha_fin = end;
+
+            },
+            select:function(start, end, allDay) {
+                vm.fecha_selection_start=start;
+                vm.fecha_selection_end=end;
+                var mockup = {
+                    title: "Adan Amezcua",
+                    allDay: false,
+                    start: start,
+                    end: end,
+                    backgroundColor: triTheming.rgba(triTheming.palettes['red']['500'].value),
+                    borderColor: triTheming.rgba(triTheming.palettes['red']['500'].value),
+                    textColor: triTheming.rgba(triTheming.palettes['red']['500'].contrast),
+                    palette: 'red'
+                };
+                vm.eventSources[0].events.push(mockup);
             }
         };
         vm.consultorios = [
@@ -129,12 +128,51 @@
                 id: 2,
                 name: "Médico"
             }];
+        vm.eventos = [
+            {
+                pacient: 'Paciente 1',
+                type: 'Ocupado',
+                fecha: moment().add(1, 'h'),
+                allDay: false
+            },
+            {
+                pacient: 'Paciente 2',
+                type: 'Libre',
+                fecha: moment().add(3, 'h'),
+                allDay: false
+            },
+            {
+                pacient: 'Paciente 3',
+                type: 'Ocupado',
+                fecha: moment().add(5, 'h'),
+                allDay: false
+            },
+            {
+                pacient: 'Paciente 4',
+                type: 'Libre',
+                fecha: moment().add(7, 'h'),
+                allDay: false
+            },
+            {
+                pacient: 'Paciente 5',
+                type: 'Ocupado',
+                fecha: moment().add(9, 'h'),
+                allDay: false
+            },
+            {
+                pacient: 'Paciente 6',
+                type: 'Libre',
+                fecha: moment().add(11, 'h'),
+                allDay: false
+
+            }
+        ];
 
 
         //uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
         vm.selectedItem = null;
         vm.searchText = null;
-        vm.showCalendar=false;
+        vm.showCalendar = false;
         vm.viewFormats = {
             'month': 'MMMM YYYY',
             'agendaWeek': 'w',
@@ -148,9 +186,22 @@
         vm.selectedItemChange = selectedItemChange;
         vm.searchTextChange = searchTextChange;
         vm.changeMonth = changeMonth;
-        vm.buscar=buscar;
+        vm.buscar = buscar;
+        vm.eliminar=eliminar;
 
         //////////////////
+        function eliminar(dato) {
+            var arr=angular.copy(vm.eventSources[0].events);
+            arr= _.without(arr, _.findWhere(arr, {
+                _id: dato
+            }));
+
+            vm.eventSources[0].events.splice(0, vm.eventSources[0].events.length);
+            vm.eventSources[0].events=arr;
+            uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('refetchEvents');
+            uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('render')
+
+        }
         function querySearch(query) {
             var results = query ? vm.pacientes.filter(createFilterFor(query)) : vm.pacientes, deferred;
 
@@ -168,9 +219,16 @@
         function selectedItemChange(item) {
             $log.info('Texto cambiado ' + item);
         }
+
         function buscar() {
-            uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
-            vm.showCalendar=true;
+            //uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
+            vm.showCalendar = true;
+            $mdToast.show(
+                $mdToast.simple()
+                    .content($filter('triTranslate')("Se ha confirmado tu cita con éxito "))
+                    .position('bottom right')
+                    .hideDelay(2000)
+            );
         }
 
         /**
@@ -189,42 +247,41 @@
         function changeMonth(direction) {
             uiCalendarConfig.calendars['triangular-calendar'].fullCalendar(direction);
         }
+
         /*
-        angular.element('.calendar').fullCalendar('changeView', 'agendaWeek');
-        setTimeout(function () {
-            //uiCalendarConfig.calendars.myCalendar.fullCalendar('changeView', 'agendaWeek' );
-            uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
-        }, 200);*/
+         angular.element('.calendar').fullCalendar('changeView', 'agendaWeek');
+         setTimeout(function () {
+         //uiCalendarConfig.calendars.myCalendar.fullCalendar('changeView', 'agendaWeek' );
+         uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
+         }, 200);*/
 
         function activate() {
             vm.eventSources[0].events.splice(0, vm.eventSources[0].events.length);
-            /*Solicitudes_Admin.consultaEspUnconfirmed().then(function (res) {
-             res.forEach(function (value) {
-             var color = getBrackground(value.tipo_solicitud);
-             var mockup = {
-             title: value.descripcion,
-             allDay: false,
-             start: moment(value.fecha_inicio,"YYYY-MM-DD"),
-             end: moment(value.fecha_termino,"YYYY-MM-DD").add(1, 'days'),
-             solicitud: value,
-             backgroundColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
-             borderColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
-             textColor: triTheming.rgba(triTheming.palettes[color]['500'].contrast),
-             palette: color
-             };
-             vm.eventSources[0].events.push(mockup);
-             });
-             });*/
+
+            vm.eventos.forEach(function (value) {
+                var color = getBrackground(value.type);
+                var mockup = {
+                    title: value.pacient,
+                    allDay: false,
+                    start: value.fecha,
+                    end: value.fecha.add(1, 'h'),
+                    backgroundColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
+                    borderColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
+                    textColor: triTheming.rgba(triTheming.palettes[color]['500'].contrast),
+                    palette: color
+                };
+                vm.eventSources[0].events.push(mockup);
+            });
+            console.log(vm.eventos);
+
         }
 
 
         function getBrackground(status) {
-            if (status === 'Envio') {
-                return 'teal';
-            } else if (status === 'Recoleccion') {
-                return 'blue-grey';
-            } else {
-                return 'indigo';
+            if (status === 'Ocupado') {
+                return 'red';
+            } else if (status === 'Libre') {
+                return 'green';
             }
 
         }
