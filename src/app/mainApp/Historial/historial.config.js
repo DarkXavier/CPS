@@ -48,6 +48,11 @@
                 templateUrl:'app/mainApp/Historial/alergias/alergia.tmpl.html',
                 controller:'AlergiaAsignacionController',
                 controllerAs:'vm'
+            }).state('triangular.admin-default.enfermedades-asignacion',{
+               url:'/asignacionEnfermedades',
+                templateUrl:'app/mainApp/Historial/enfermedades/enfermedad.tmpl.html',
+                controller:'EnfermedadesAsignacionController',
+                controllerAs:'vm'
             });
 
 
@@ -63,13 +68,13 @@
                 type: 'dropdown',
                 priority: 6.1,
                 children:[{
-                    name: 'alergias',
+                    name: 'Alergias',
                     state: 'triangular.admin-default.alergias',
                     type: 'link'
 
                 },{
                     name: 'Enfermedades Cronico Degenerativas',
-                    state: 'triangular.admin-default.antecedentesPersonales',
+                    state: 'triangular.admin-default.enfermedades-asignacion',
                     type: 'link'
 
                 },{

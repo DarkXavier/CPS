@@ -7,11 +7,9 @@
 
     angular
         .module('app.mainApp.catalogos')
-        .controller('AlergiaAsignacionController',AlergiaAsignacionController)
-        .filter('personaSearch', personaSearch);
+        .controller('EnfermedadesAsignacionController',EnfermedadesAsignacionController);
 
-    /* @ngInject */
-    function AlergiaAsignacionController(Persona,Alergia,$scope, toastr, Translate,PersonaAlergia) {
+    function EnfermedadesAsignacionController(Persona,PersonaEnfermedad,Enfermedad,$scope, toastr, Translate,$mdDialog) {
 
         var vm = this;
 
@@ -19,19 +17,19 @@
         vm.querySearch = querySearch;
         vm.selectedItems = selectedItems;
         vm.cancel = cancel;
+        vm.create = create;
         vm.remove=remove;
-        vm.create=create;
-        vm.changeAlergia=changeAlergia;
         vm.enable=enable;
         vm.search_items = [];
+        vm.enfermedadPersona=[];
         vm.searchText = '';
-        vm.disabled=true;
-        var alergia = {
+        var enfermedad = {
             nombre: null,
             descripcion: null
         };
-        vm.alergia = angular.copy(alergia);
+        vm.enfermedad = angular.copy(enfermedad);
         vm.numberBuffer = '';
+        vm.disabled=true;
         activate();
         init();
         function init() {
@@ -42,70 +40,69 @@
             vm.successUpdateMessage = Translate.translate('MAIN.MSG.GENERIC_SUCCESS_UPDATE');
             vm.successDeleteMessage = Translate.translate('MAIN.MSG.GENERIC_SUCCESS_DELETE');
         }
-        function changeAlergia() {
-
-        }
 
         function activate() {
+            vm.enfermedades=Enfermedad.list();
             vm.personas=Persona.list();
-            vm.alergias=Alergia.list();
         }
         function enable() {
             vm.disabled=false;
         }
         function remove(ev,index) {
 
-            var alergia=_.findWhere(vm.alergias, {
+            var enfermedad=_.findWhere(vm.enfermedades, {
                 nombre: ev
             });
-            var alergiaPerson=_.findWhere(vm.alergiasPersona, {
-                alergia_name: ev
+            var enfermedadPerson=_.findWhere(vm.enfermedadesPersona, {
+                enfermedad_name: ev
             });
-            delete  alergiaPerson.alergia_name;
-            alergiaPerson.alergia=alergia.id;
-            PersonaAlergia.remove(alergiaPerson).then(function (res) {
-                    toastr.success(vm.successDeleteMessage, vm.successTitle);
-                obtenerAlergias();
+            delete  enfermedadPerson.enfermedad_name;
+            enfermedadPerson.enfermedad=enfermedad.id;
+            PersonaEnfermedad.remove(enfermedadPerson).then(function (res) {
+                toastr.success(vm.successDeleteMessage, vm.successTitle);
+                obtenerEnfermededaes();
                 cancel();
-                }).catch(function (res) {
-                    toastr.warning(vm.errorMessage, vm.errorTitle);
-                });
+            }).catch(function (res) {
+                toastr.warning(vm.errorMessage, vm.errorTitle);
+            });
 
         }
         function create() {
             var request={
-                alergia:  vm.selectedAlergia.id,
+                enfermedad:  vm.selectedEnfermedad.id,
                 persona: vm.selectedList.id,
                 fecha: moment()
             };
-            PersonaAlergia.create(request).then(function (res) {
+            PersonaEnfermedad.create(request).then(function (res) {
                 toastr.success(vm.successCreateMessage, vm.successTitle);
-                obtenerAlergias();
+                vm.enfermedad = angular.copy(enfermedad);
+                obtenerEnfermededaes();
                 cancel();
 
             }).catch(function (res) {
-                console.log(res);
                 toastr.warning(vm.errorMessage, vm.errorTitle);
             });
         }
+
         function cancel() {
-            $scope.AsignacionAlergia.$setPristine();
-            $scope.AsignacionAlergia.$setUntouched();
+            $scope.AsignacionEnfermedad.$setPristine();
+            $scope.AsignacionEnfermedad.$setUntouched();
+            vm.enfermedad = angular.copy(enfermedad);
             vm.disabled=true;
         }
 
         function selectedItems(project) {
             vm.selectedList = project;
-            vm.alergia = angular.copy(project);
+            vm.enfermedad = angular.copy(project);
 
-            obtenerAlergias();
+            obtenerEnfermededaes();
         }
-        function obtenerAlergias() {
-            vm.alergiaPersona=[];
-            Alergia.getAlergiasByPerson(vm.selectedList).then(function (res) {
-                vm.alergiasPersona=res;
+        function obtenerEnfermededaes() {
+            vm.enfermedadPersona=[];
+            Enfermedad.getEnfermedadesByPerson(vm.selectedList).then(function (res) {
+                vm.enfermedadesPersona=res;
                 res.forEach(function (value) {
-                    vm.alergiaPersona.push(value.alergia_name);
+                    vm.enfermedadPersona.push(value.enfermedad_name);
                 });
             });
         }
@@ -123,18 +120,6 @@
             return vm.search_items;
         }
 
-    }
-    function personaSearch() {
-        return function (input, text) {
-            if (!angular.isString(text) || text === '') {
-                return input;
-            }
-
-            return _.filter(input, function (item) {
-                return item.nombre.toLowerCase().indexOf(text.toLowerCase()) >= 0;
-            });
-
-        };
     }
 
 

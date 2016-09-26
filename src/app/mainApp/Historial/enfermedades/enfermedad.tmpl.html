@@ -1,0 +1,121 @@
+<div layout="column" flex="100" layout-padding layout-fill>
+    <md-card class="md-padding card1" flex="flex">
+        <md-card-content>
+            <div layout="row" flex="" layout-align="space-around stretch" id="cabecera">
+                <h2 flex="70" flex-sm="100" flex-gt-xs="100" translate=""
+                    class="md-headline-1 text-center">Asignación deEnfermedades Crónico Degenerativas</h2>
+            </div>
+            <div flex="100" layout="row" layout-align="space-around stretch" layout-xs="column" layout-sm="column"
+                 layout-fill="">
+
+                <div layout="column" flex-lg="40" flex-gt-lg="40" flex-xl="40" flex-gt-sm="100" flex-md="100"
+                     flex-sm="100" flex-gt-xs="100" flex-xs="100">
+                    <md-autocomplete md-selected-item="vm.selected"
+                                     md-selected-item-change="vm.selectedItemChange(vm.selected)"
+
+                                     md-items="item in vm.querySearch(vm.searchText)" md-item-text="item.nombre"
+                                     md-min-length="2"
+                                     md-search-text-change="vm.search(vm.searchText)"
+                                     md-search-text="vm.searchText"
+                                     md-menu-class="autocomplete-custom-template"
+                                     md-floating-label="Búsqueda de enfermedades">
+                        <span
+                                md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.nombre}}</span>
+                        <md-item-template><span class="item-title">
+                        <md-icon md-font-icon="fa fa-briefcase"></md-icon>
+                        <span>&nbsp; {{item.nombre}}</span>
+                        </span><span class="item-metadata">
+                            <span class="item-metastat">
+                                <strong>{{item.descripcion }}</strong>
+                            </span>
+                        </span>
+                        </md-item-template>
+                        <md-not-found><span>No se encontró la enfermedad</span></md-not-found>
+                    </md-autocomplete>
+                    <md-virtual-repeat-container class="vertical-container" layout-fill="">
+                        <md-list class="inbox-list">
+                            <md-list-item ng-repeat="persona in vm.personas | personaSearch:vm.searchText"
+                                          class="inbox-list__email inbox-list__email--animated md-3-line md-long-text">
+                                <md-button ng-click="vm.selectedItems(persona)" layout-padding layout="row"
+                                           layout-align="start center"
+                                           ng-class="{'inbox-list__email--active' : persona === vm.selectedList }">
+                                    <img class="md-avatar" ngf-src="persona.foto" width="9.0" height="90"/>
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3><b>Nombre:</b> {{persona.nombre }}</h3>
+                                        <h4><b>Apellido paterno:</b> {{::persona.apellido_paterno}}</h4>
+                                        <h4><b>Apellido materno:</b>{{::persona.apellido_materno}}</h4>
+                                    </div>
+                                </md-button>
+                                <md-divider></md-divider>
+
+                            </md-list-item>
+
+                        </md-list>
+
+                    </md-virtual-repeat-container>
+                </div>
+                <div layout="column" flex-lg="60" flex-gt-lg="65" flex-xl="65" flex-gt-sm="100" flex-md="100"
+                     flex-sm="100" flex-gt-xs="100" flex-xs="100" layout-align="start stretch">
+                    <h2 class="md-headline-1 text-center">
+                         Enfermedad Crónico Degenerativa</h2>
+                    <form name="AsignacionEnfermedad">
+
+
+                        <md-autocomplete
+                                md-items="item in vm.enfermedades"
+                                md-selected-item="vm.selectedEnfermedad"
+                                md-selected-item-change="vm.changeAlergia(item)"
+                                md-search-text-change="vm.search(vm.searchParameter)"
+                                md-search-text="vm.searchParameter"
+                                md-item-text="item.nombre"
+                                name="enfermedad"
+                                required="required"
+                                md-min-length="0"
+                                md-floating-label="Búscando enfermedad">
+                        <span
+                                md-highlight-text="vm.searchParameter" md-highlight-flags="^i">{{item.nombre}}</span>
+                            <md-item-template><span class="item-title">
+                        <md-icon md-font-icon="fa fa-briefcase"></md-icon>
+                        <span>&nbsp; {{item.nombre}}</span>
+                        </span>
+                            </md-item-template>
+                            <md-not-found><span>No se encontró a la enfermedad</span></md-not-found>
+                        </md-autocomplete>
+                        <div ng-messages="AsignacionEnfermedad.alergia.$error">
+                            <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                        </div>
+
+
+                        <div class="chipsdemoCustomInputs">
+                            <label>Enfermedades Crónicas del paciente</label>
+                            <md-chips ng-model="vm.enfermedadPersona"
+                                      md-removable=true
+                                      md-on-remove="vm.remove($chip, $index)"
+                                      readonly="vm.disabled"
+                            >
+                            </md-chips>
+
+
+                        </div>
+                    </form>
+                    <div layout="row" layout-align="end end">
+                        <md-button aria-label="fab button"
+                                   ng-if="vm.enfermedad.id!=null && vm.enfermedad.id!=undefined && vm.disabled==true"
+                                   ng-click="vm.enable()"
+                                   class="md-raised md-primary">
+                            <md-icon md-font-icon="fa fa-pencil"></md-icon>
+                        </md-button>
+                        <md-button aria-label="fab button"
+                                   ng-if="vm.disabled==true"
+                                   ng-disabled="AsignacionEnfermedad.$invalid" ng-click="vm.create()"
+                                   class="md-raised md-primary">
+                            <md-icon md-font-icon="fa fa-save"></md-icon>
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </md-card-content>
+
+
+    </md-card>
+</div>
