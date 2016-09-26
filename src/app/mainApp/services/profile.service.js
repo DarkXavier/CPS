@@ -5,7 +5,7 @@
     'use strict';
 
     angular
-        .module('app.mainApp.profile')
+        .module('app.mainApp')
         .factory('Profile',Profile);
 
     function Profile(Restangular)

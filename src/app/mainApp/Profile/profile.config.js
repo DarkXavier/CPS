@@ -4,11 +4,11 @@
 (function(){
     angular
         .module('app.mainApp.profile')
-        .config(moduleconfig);
+        .config(moduleConfig);
     
     function moduleConfig($stateProvider){
         $stateProvider
-            .state('profile',{      
+            .state('triangular.admin-default.profile',{
                     url:'/profile',
                     templateUrl:'app/mainApp/Profile/profile.tmpl.html',
                     controller:'profileController',
