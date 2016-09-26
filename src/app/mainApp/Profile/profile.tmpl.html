@@ -1,22 +1,35 @@
 <div layout="column" flex="100" layout-padding layout-fill>
     <md-card class="md-padding-card1" flex-gt-md="90" flex="100" layout="column">
         <md-card-container layout="column" flex="">
-            <h2>Información del Paciente</h2>
+            <h2>Datos Personales</h2>
+            <img ng-src="{{vm.persona.foto}}" style="max-width:100px; max-height:130px"/>
             <div layout="column" layout-gt-xs="row">
                 <md-input-container md-no-float class="md-block" flex="40">
                     <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
                     <input type="text" ng-model="vm.persona.nombre" placeholder="Nombre" required
-                           ng-disabled="!vm.editing">
+                           ng-disabled="true">
                 </md-input-container>
                 <md-input-container md-no-float class="md-block" flex="30">
                     <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
                     <input type="text" ng-model="vm.persona.apellido_paterno" placeholder="Apellido Paterno" required
-                           ng-disabled="!vm.editing">
+                           ng-disabled="true">
                 </md-input-container>
                 <md-input-container md-no-float class="md-block" flex="30">
                     <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
                     <input type="text" ng-model="vm.persona.apellido_materno" placeholder="Apellido Materno" required
-                           ng-disabled="!vm.editing">
+                           ng-disabled="true">
+                </md-input-container>
+            </div>
+            <div layout="column" layout-gt-xs="row">
+                <md-input-container md-no-float class="md-block" flex="30">
+                    <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                    <input type="text" ng-model="vm.persona.curp" placeholder="CURP" required
+                           ng-disabled="true">
+                </md-input-container>
+                <md-input-container md-no-float class="md-block" flex="30">
+                    <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                    <input type="text" ng-model="vm.persona.cedula_profesional" placeholder="Cédula Profesional" required
+                           ng-disabled="true">
                 </md-input-container>
             </div>
             <div layout="column" layout-gt-xs="row">
@@ -27,7 +40,7 @@
                 </div>
                 <md-input-container md-no-float class="md-block" flex="100" flex-gt-xs="33">
                     <md-icon md-font-icon="zmdi zmdi-male-female"></md-icon>
-                    <md-select name="PersonaGenre" ng-model="vm.vaccine.tipo" required="" md-no-asterisk=""
+                    <md-select name="PersonaGenre" ng-model="vm.persona.genero" required="" md-no-asterisk=""
                                ng-disabled="!vm.editing">
                         <md-option ng-repeat="tipo in vm.generos" value="{{tipo}}">{{tipo}}</md-option>
                     </md-select>

@@ -58,7 +58,7 @@
             type: 'dropdown',
             children: [{
                 name: 'Vacunas',
-                state: 'triangular.admin-default.carnetreview',
+                state: 'triangular.admin-default.vacunas',
                 type: 'link'
             }, {
                 name: 'Enfermedades',
