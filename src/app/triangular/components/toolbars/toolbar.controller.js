@@ -8,9 +8,8 @@
     /* @ngInject */
     function DefaultToolbarController($scope, $injector, $rootScope, $mdMedia, $state, $element, $filter,
                                       $mdUtil, $mdSidenav,$mdToast, $timeout, $document, triBreadcrumbsService,
-                                      triSettings, triLayout, OAuth, toastr, PersonaLocalService) {
+                                      triSettings, triLayout, OAuth, toastr, Profile) {
         var vm = this;
-        vm.no_solicitudes=2;
         vm.breadcrumbs = triBreadcrumbsService.breadcrumbs;
         vm.emailNew = false;
         vm.languages = triSettings.languages;
@@ -23,13 +22,15 @@
         vm.toggleFullScreen = toggleFullScreen;
         vm.LogOut=LogOut;
 
+        vm.persona=null;
 
         initToolbar();
 
         function initToolbar()
         {
-            vm.usuario = PersonaLocalService.persona;
+            //m.usuario = PersonaLocalService.persona;
             //console.log(vm.usuario);
+            vm.persona=Profile.get();
         }
 
         ////////////////
@@ -105,5 +106,6 @@
         $scope.$on('newMailNotification', function(){
             vm.emailNew = true;
         });
+
     }
 })();

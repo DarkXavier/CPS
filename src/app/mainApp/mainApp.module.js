@@ -9,7 +9,8 @@
         'app.mainApp.historial',
         'app.mainApp.administracion',
         'app.mainApp.catalogos',
-        'app.mainApp.quickAtention'
+        'app.mainApp.quickAtention',
+        'app.mainApp.profile'
     ]);
 
 })();
