@@ -1,14 +1,15 @@
 /**
  * Created by Emmanuel on 25/09/2016.
  */
-(function () {
+(function ()
+{
     'use_strict';
 
     angular
         .module('app.mainApp.catalogos')
         .controller('vacunasController', vacunasController);
 
-    function vacunasController(Vacunas, toastr, $scope, Translate) {
+    function vacunasController(Vacunas, toastr, $scope, $mdDialog) {
         var vm = this;
 
 
@@ -23,19 +24,13 @@
 
         vm.vaccines = null;
         vm.filteredVaccines = [];
-        vm.vaccine = {
-            "nombre": "",
-            "descripcion": "",
-            "tipo": null,
-            "num_dosis_basicas": null
-        };
-        vm.selectedVaccine={
-            "nombre": "",
-            "descripcion": "",
-            "tipo": null,
-            "num_dosis_basicas": null
-        };
+        vm.vaccine = null;
+        vm.selectedVaccine=null;
         vm.searchParameter='';
+        vm.tipos=[
+            "Unica",
+            "Varias"
+        ];
         activate();
 
         function activate() {
@@ -58,15 +53,16 @@
             vm.successRemove="Éxito al eliminar vacuna";
             vm.errorUpdate="Error al actualizar vacuna";
             vm.successUpdate="Éxito al actualizar vacuna";
-            vm.vaccines=Vacunas.getAll();
+            vm.vaccines=Vacunas.list();
+            console.log(vm.vaccines);
             vm.filteredVaccines=vm.vaccines;
         }
 
         function create() {
-            Vacunas.post(vm.vaccine).then(function(res){
+            Vacunas.create(vm.vaccine).then(function(res){
                 toastr.success(vm.succesCreate,vm.successTitle);
                 vm.selectedVaccine=null;
-                vm.vaccines=Vacunas.getAll();
+                vm.vaccines=Vacunas.list();
                 vm.filteredVaccines=vm.vaccines;
                 $scope.formVaccine.$setPristine();
                 $scope.formVaccine.$setUntouched();
@@ -76,36 +72,45 @@
         }
 
         function update() {
-            Vacunas.put(vm.vaccine).then(function(res){
+            Vacunas.update(vm.vaccine).then(function(res){
                 toastr.success(vm.successUpdate,vm.successTitle);
-                vm.selectedVaccine=null;
-                vm.vaccines=Vacunas.getAll();
-                vm.filteredVaccines=vm.vaccines;
-                $scope.formVaccine.$setPristine();
-                $scope.formVaccine.$setUntouched();
+                vm.vaccines=Vacunas.list();
+                vm.clear();
             }).catch(function(err){
                 toastr.error(vm.errorUpdate,vm.errorTitle);
             });
         }
 
         function remove() {
-            Vacunas.remove(vm.vaccine).then(function(res){
-                toastr.success(vm.successRemove,vm.successTitle);
-                $scope.formVaccine.$setPristine();
-                $scope.formVaccine.$setUntouched();
-                vm.vaccines=Vacunas.getAll();
-                vm.filteredVaccines=vm.vaccines;
-                vm.selectedVaccine=null;
-                vm.vaccine=null;
-            }).catch(function(err){
-                toastr.error(vm.errorRemove,vm.errorTitle);
-                console.log(err);
+            var confirm = $mdDialog.confirm()
+                .title('Confirmación para eliminar')
+                .textContent('¿Esta seguro de eliminar este elemento?')
+                .ariaLabel('Lucky day')
+                .ok('Aceptar')
+                .cancel('Cancelar');
+            $mdDialog.show(confirm).then(function() {
+                Vacunas.remove(vm.vaccine).then(function(res){
+                    toastr.success(vm.successRemove,vm.successTitle);
+                    $scope.formVaccine.$setPristine();
+                    $scope.formVaccine.$setUntouched();
+                    vm.vaccines=Vacunas.list();
+                    vm.filteredVaccines=vm.vaccines;
+                    vm.selectedVaccine=null;
+                    vm.vaccine=null;
+                }).catch(function(err){
+                    toastr.error(vm.errorRemove,vm.errorTitle);
+                    console.log(err);
+                });
+            }, function() {
+
             });
+
+
         }
 
         function search(text) {
             vm.filteredVaccines = _.filter(vm.vaccines, function (item) {
-                return item.descripcion.includes(text);
+                return item.nombre.toLowerCase().includes(text.toLowerCase());
             });
             return vm.filteredVaccines;
         }

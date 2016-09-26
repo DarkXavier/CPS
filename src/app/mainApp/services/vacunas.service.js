@@ -6,13 +6,13 @@
 
     angular
         .module('app.mainApp')
-        .factory('Vacuna',Vacuna);
+        .factory('Vacunas',Vacunas);
 
-    function Vacuna(Restangular)
+    function Vacunas(Restangular)
     {
         var baseVacuna = Restangular.all('vacuna');
 
-        var service = {
+        return {
             list:list,
             update:update,
             create:create,
@@ -26,7 +26,7 @@
 
         function update(object)
         {
-            return object.put();
+            return baseVacuna.all(object.id).customPUT(object);
         }
 
         function create(object){
@@ -37,7 +37,6 @@
             return baseVacuna.customDELETE(object.id,null,{'content-type':'application/json'});
         }
 
-        return service;
     }
 
 })();

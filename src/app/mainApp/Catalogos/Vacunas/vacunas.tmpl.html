@@ -1,10 +1,14 @@
 <div layout="column" flex="100" layout-padding layout-fill>
     <md-card class="md-padding-card1" flex-gt-md="90" flex="100" layout="column">
-        <md-toolbar>
-            <div class="md-toolbar-tools">
-                <h1>{{'Vaccines.Header'|translate}}</h1>
-            </div>
-        </md-toolbar>
+        <div layout="row" flex="" layout-align="space-around stretch" id="header">
+            <h2 flex="70" flex-sm="100" flex-gt-xs="100" translate=""
+                class="md-headline-1 text-center">Vacunas</h2>
+            <md-button aria-label="fab button" class="md-fab md-scale md-fab-top-right" ng-click="vm.clear()">
+                <md-icon md-font-icon="fa fa-plus" ng-style="{color: 'white'}">
+
+                </md-icon>
+            </md-button>
+        </div>
         <div layout-gt-md="row" layout="column">
             <!--Autocomplete div-->
             <div layout="column" layout-align="space-between stretch" flex-gt-md="30" flex="100">
@@ -15,12 +19,22 @@
                         md-selected-item-change="vm.selectedItemChange(item)"
                         md-search-text-change="vm.search(vm.searchParameter)"
                         md-search-text="vm.searchParameter"
-                        md-item-text="item.descripcion"
+                        md-item-text="item.nombre"
                         md-min-length="1"
-                        md-floating-label="{{'Vaccines.Fields.Search'|translate}}">
+                        md-floating-label="Busqueda de vacunas">
+                    <span md-highlight-text="vm.searchParameter"  md-highlight-flags="^i">{{item.nombre}}</span>
                     <md-item-template>
-                        <span>{{item.descripcion}}</span>
+                        <span class="item-title">
+                            <md-icon md-font-icon="fa fa-briefcase"></md-icon>
+                            <span>&nbsp; {{item.nombre}}</span>
+                        </span>
+                        <span class="item-metadata">
+                            <span class="item-metastat">
+                                <strong>{{item.descripcion}}</strong>
+                            </span>
+                        </span>
                     </md-item-template>
+                    <md-not-found><span>No se encontró la vacuna</span></md-not-found>
                 </md-autocomplete>
 
                 <md-virtual-repeat-container flex="flex" hide layout-fill show-gt-md style="min-height:350px">
@@ -30,7 +44,7 @@
                              layout-padding layout="row"
                              layout-align="start center" >
                             <md-icon md-font-icon="zmdi zmdi-case" flex="20"></md-icon>
-                            <span flex="80">{{item.descripcion}}</span>
+                            <span flex="80">{{item.nombre}}</span>
                         </div>
                     </div>
                 </md-virtual-repeat-container>
@@ -39,14 +53,39 @@
             </div>
             <!--Content div-->
             <div layout="column" flex-gt-md="70" flex="100">
-                <h2>{{'Vaccines.Fields.Information'|translate}}</h2>
+                <h2>Información de la vacuna</h2>
                 <form name="formVaccine" novalidate>
                     <md-input-container class="md-block">
-                        <label>{{'Vaccines.Fields.VaccineName'|translate}}</label>
+                        <label>Nombre</label>
                         <input name="VaccineName" type="text" required="" md-no-asterisk=""
-                               ng-model="vm.vaccine.descripcion">
+                               ng-model="vm.vaccine.nombre">
                         <div ng-messages="formVaccine.VaccineName.$error">
-                            <div ng-message="required">{{'Vaccines.Errors.Required'|translate}}</div>
+                            <div ng-message="required">El campo es requerido</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Descripción</label>
+                        <input name="VaccineDescription" type="text" required="" md-no-asterisk=""
+                               ng-model="vm.vaccine.descripcion">
+                        <div ng-messages="formVaccine.VaccineDescription.$error">
+                            <div ng-message="required">El campo es requerido</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Tipo de aplicación</label>
+                        <md-select name="VaccineKind" ng-model="vm.vaccine.tipo" required="" md-no-asterisk="">
+                            <md-option ng-repeat="tipo in vm.tipos" value="{{tipo}}">{{tipo}}</md-option>
+                        </md-select>
+                        <div ng-messages="formVaccine.VaccineKind.$error">
+                            <div ng-message="required">El campo es requerido</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>Número de dosis</label>
+                        <input name="VaccineDoses" type="number" required="" md-no-asterisk=""
+                               ng-model="vm.vaccine.num_dosis_basicas">
+                        <div ng-messages="formVaccine.VaccineName.$error">
+                            <div ng-message="required">El campo es requerido</div>
                         </div>
                     </md-input-container>
                 </form>
