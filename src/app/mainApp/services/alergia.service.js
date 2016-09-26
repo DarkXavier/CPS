@@ -16,14 +16,17 @@
             list:list,
             update:update,
             create:create,
-            remove:remove
+            remove:remove,
+            getAlergiasByPerson:getAlergiasByPerson
         };
 
 
         function list(){
             return baseEnfermedad.getList().$object;
         }
-
+        function getAlergiasByPerson(person) {
+            return baseEnfermedad.one('person',person.id).getList();
+        }
         function update(object)
         {
             return baseEnfermedad.all(object.id).customPUT(object);

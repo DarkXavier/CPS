@@ -43,6 +43,16 @@
                 templateUrl:'app/mainApp/Historial/Citas/citas.tmpl.html',
                 controller:'CitasController',
                 controllerAs:'vm'
+            }).state('triangular.admin-default.alergias',{
+               url:'/asignacionAlergias',
+                templateUrl:'app/mainApp/Historial/alergias/alergia.tmpl.html',
+                controller:'AlergiaAsignacionController',
+                controllerAs:'vm'
+            }).state('triangular.admin-default.enfermedades-asignacion',{
+               url:'/asignacionEnfermedades',
+                templateUrl:'app/mainApp/Historial/enfermedades/enfermedad.tmpl.html',
+                controller:'EnfermedadesAsignacionController',
+                controllerAs:'vm'
             });
 
 
@@ -64,7 +74,7 @@
 
                 },{
                     name: 'Enfermedades Cronico Degenerativas',
-                    state: 'triangular.admin-default.antecedentesPersonales',
+                    state: 'triangular.admin-default.enfermedades-asignacion',
                     type: 'link'
 
                 },{

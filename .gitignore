@@ -7,3 +7,5 @@ dist
 node_modules
 .DS_Store
 src/app/config.js
+gulp/deploy.js
+config/config.json
