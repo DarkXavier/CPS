@@ -9,3 +9,4 @@ node_modules
 src/app/config.js
 gulp/deploy.js
 config/config.json
+.awspublish-csp-stg
