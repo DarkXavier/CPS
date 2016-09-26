@@ -8,7 +8,7 @@
         .module('app.mainApp.historial')
         .controller('CitasController', CitasController);
 
-    function CitasController($timeout, $q, $log, $rootScope,triTheming ,  $mdToast, $filter, triLayout, uiCalendarConfig) {
+    function CitasController($timeout, $q, $log, $rootScope,triTheming , $mdDialog, $mdToast, $filter, triLayout, uiCalendarConfig) {
         var vm = this;
         vm.pacientes = [
             {

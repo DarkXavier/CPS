@@ -1,174 +1,96 @@
-<div flex layout="column">
-    <md-card flex="90" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
-        <img src="assets/images/backgrounds/material-backgrounds/mb-bg-ipnCenter2-narrow.png" alt="Card Image">
+<div layout="column" flex="100" layout-padding layout-fill>
+    <md-card class="md-padding card1" flex="flex">
         <md-card-content>
-            <div layout="row" align="center">
-                <md-input-container flex="25">
-                    <img src="assets/images/files/IPN.png">
-                </md-input-container>
-                <md-input-container flex="50">
-                    <div layout="column">
-                        <h2>Instituto Politécnico Nacional</h2>
-                        <h3>La Técnica al Servicio de la Patria</h3>
-                        <h4>Carnet de Servicios Politécnicos</h4>
-                        <h1>Cita Médica</h1>
-                    </div>
-                </md-input-container>
-                <md-input-container flex="25">
-                    <img src="assets/images/files/SEP.png">
-                </md-input-container>
+            <div layout="row" flex="" layout-align="space-around stretch" id="cabecera">
+                <h2 flex="70" flex-sm="100" flex-gt-xs="100" translate=""
+                    class="md-headline-1 text-center">Consultas Médicas</h2>
             </div>
-        </md-card-content>
-    </md-card>
+            <div flex="100" layout="row" layout-align="space-around stretch" layout-xs="column" layout-sm="column"
+                 layout-fill="">
 
-    <div flex="90" layout='column'>
-        <!--Datos Personales-->
-        <div flex="100">
-            <md-card class="md-padding card1" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
-                <md-card-content>
-                    <md-autocomplete md-selected-item="vm.selectedPacient"
-                                     md-selected-item-change="vm.selectedItemChange(vm.selectedPacient)"
-                                     md-items="item in vm.querySearch(vm.searchText)" md-item-text="item.nombre"
-                                     md-min-length="3"
+                <div layout="column" flex-lg="40" flex-gt-lg="40" flex-xl="40" flex-gt-sm="100" flex-md="100"
+                     flex-sm="100" flex-gt-xs="100" flex-xs="100">
+                    <md-autocomplete md-selected-item="vm.selected"
+                                     md-selected-item-change="vm.selectedItemChange(vm.selected)"
+
+                                     md-items="item in vm.querySearch(vm.searchText)" md-item-text="item.consultorio"
+                                     md-min-length="2"
                                      md-search-text-change="vm.search(vm.searchText)"
                                      md-search-text="vm.searchText"
                                      md-menu-class="autocomplete-custom-template"
-                                     md-floating-label="Búsqueda de  personas">
+                                     md-floating-label="Búsqueda de citas">
                         <span
-                                md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.razon_social}}</span>
+                                md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.consultorio}}</span>
                         <md-item-template><span class="item-title">
                         <md-icon md-font-icon="fa fa-briefcase"></md-icon>
-                        <span>&nbsp; {{item.nombre}}</span>
+                        <span>&nbsp; {{item.consultorio}}</span>
+                        </span><span class="item-metadata">
+                            <span class="item-metastat">
+                                <strong>{{item.unidad_servicio }}</strong>
+                            </span>
                         </span>
                         </md-item-template>
-                        <md-not-found><span>No se encontró a la persona </span></md-not-found>
+                        <md-not-found><span>No se encontró la Consulta Médica</span></md-not-found>
                     </md-autocomplete>
+                    <md-virtual-repeat-container class="vertical-container" layout-fill="">
+                        <md-list class="inbox-list">
+                            <md-list-item ng-repeat="eventos in vm.eventos | eventosSearch:vm.searchText"
+                                          class="inbox-list__email inbox-list__email--animated md-3-line md-long-text">
+                                <md-button ng-click="vm.selectedItems(eventos)" layout-padding layout="row"
+                                           layout-align="start center"
+                                           ng-class="{'inbox-list__email--active' : eventos === vm.selectedList }">
+                                    <md-icon md-svg-icon="assets/images/hospital.svg" class="md-avatar"></md-icon>
 
-                </md-card-content>
-            </md-card>
-            <!--Inicio Receta-->
-            <div layout="row" ng-show="vm.selectedPacient!=null">
-                <div layout="column" flex="50">
-                    <md-card class="md-padding card1" md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
-                        <h2>Datos de la persona</h2>
-                        <div flex="50" flex-xs="100" flex-sm="100">
-                            <h3>Nombre</h3>
-                            <div layout="row" layout-xs="column" layout-align-xs="center center" layout-sm="column"
-                                 layout-align-sm="center center">
-                                <span>{{vm.selectedPacient.nombre}}</span>
-                            </div>
-                        </div>
-                        <div flex="50" flex-xs="100" flex-sm="100">
-                            <h3>Apellido Paterno</h3>
-                            <div layout="row" layout-xs="column" layout-align-xs="center center" layout-sm="column"
-                                 layout-align-sm="center center">
-                                <span>{{vm.selectedPacient.apellido_paterno}}</span>
-                            </div>
-                        </div>
-                        <div flex="50" flex-xs="100" flex-sm="100">
-                            <h3>Apellido Materno</h3>
-                            <div layout="row" layout-xs="column" layout-align-xs="center center" layout-sm="column"
-                                 layout-align-sm="center center">
-                                <span>{{vm.selectedPacient.apellido_materno}}</span>
-                            </div>
-                        </div>
-                        <div flex="50" flex-xs="100" flex-sm="100">
-                            <h3>Teléfono</h3>
-                            <div layout="row" layout-xs="column" layout-align-xs="center center" layout-sm="column"
-                                 layout-align-sm="center center">
-                                <span>{{vm.selectedPacient.telefono}}</span>
-                            </div>
-                        </div>
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3><b>Consultorio:</b> {{eventos.consultorio }}</h3>
+                                        <h4><b>Fecha:</b> {{eventos.fecha}}</h4>
+                                    </div>
+                                </md-button>
+                                <md-divider></md-divider>
 
-                        <!--
-                        <div flex="50" flex-xs="100" flex-sm="100">
-                            <h3>Foto</h3>
-                            <div layout="row" layout-xs="column" layout-align-xs="center center" layout-sm="column"
-                                 layout-align-sm="center center">
-                                <img class="make-round" src="{{vm.selectedPacient.foto}}" width="100" height="100"/>
-                            </div>
-                        </div>
-                        -->
-                    </md-card>
+                            </md-list-item>
+
+                        </md-list>
+
+                    </md-virtual-repeat-container>
                 </div>
-                <div flex="50">
-                    <md-card md-theme="{{ showDarkTheme ? 'dark-blue' : 'default' }}">
-                        <md-card-content>
-                            <md-input-container class="md-block">
-                                <md-select placeholder="Seleccione el tipo de servicio"
-                                           ng-model="vm.tipo_servicio" name="tipo_servicio"
-                                >
-                                    <md-option ng-value="unidad.id" ng-repeat='unidad in vm.tipo_unidad_servicio'>
-                                        {{unidad.name}}
-                                    </md-option>
-                                </md-select>
+                <div layout="column" flex-lg="60" flex-gt-lg="65" flex-xl="65" flex-gt-sm="100" flex-md="100"
+                     flex-sm="100" flex-gt-xs="100" flex-xs="100" layout-align="start stretch">
+                    <h2 class="md-headline-1 text-center">
+                        Información de la consulta</h2>
+                    <form name="ListaForm">
+                        <md-input-container class="md-block">
+                            <label>Consultorio</label>
+                            <input ng-required='true' type="text" name="nombre" readonly
+                                   ng-model="vm.evento.consultorio"/>
+                            <div ng-messages="ListaForm.nombre.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
 
-                            </md-input-container>
-                            <md-input-container class="md-block" ng-if="vm.tipo_servicio!=null">
-                                <md-select placeholder="Seleccione la unidad de servicio"
-                                           ng-model="vm.servicio" name="servicio"
-                                >
-                                    <md-option ng-value="unidad.id" ng-repeat='unidad in vm.unidad_servicio'>
-                                        {{unidad.name}}
-                                    </md-option>
-                                </md-select>
-
-                            </md-input-container>
-                            <md-input-container class="md-block" ng-if="vm.servicio!=null">
-                                <md-select placeholder="Seleccione la unidad de servicio"
-                                           ng-model="vm.consultorio" name="consultorio"
-                                >
-                                    <md-option ng-value="consulto.id" ng-repeat='consulto in vm.consultorios'>
-                                        {{consulto.nombre}}
-                                    </md-option>
-                                </md-select>
-
-                            </md-input-container>
-
-                            <md-input-container class="md-block" ng-if="vm.consultorio!=null">
-                                <md-button ng-click="vm.buscar()" class="md-raised">Agendar</md-button>
-
-                            </md-input-container>
-                        </md-card-content>
-
-
-                    </md-card>
+                        <md-input-container class="md-block">
+                            <label>Unidad de Servicio</label>
+                            <input md-no-asterisk="" required="" type="text" name="unidad_servicio" readonly
+                                   ng-model="vm.evento.unidad_servicio"/>
+                            <div ng-messages="ListaForm.unidad_servicio.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Fecha</label>
+                            <input md-no-asterisk="" required="" type="text" name="descripcion" readonly
+                                   ng-model="vm.evento.fecha"/>
+                            <div ng-messages="ListaForm.fecha.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                    </form>
 
                 </div>
             </div>
-            <div layout="row">
-                <div class="calendar-page" flex>
-                    <div layout="row" layout-align="end center">
-                        <div flex="50">
-                            <h2 class="font-weight-300 font-size-5 margin-top-60 margin-bottom-30" flex
-                                ng-hide="vm.currentView == 'agendaWeek'">{{vm.currentDay |
-                                amDateFormat:vm.viewFormats[vm.currentView]}}</h2>
-                        </div>
-                        <div flex="50">
-                            <md-button class="md-icon-button" ng-click="vm.changeMonth('prev')"
-                                       aria-label="previous month">
-                                <md-icon md-font-icon="zmdi zmdi-chevron-left" ng-style="{color: 'black'}"></md-icon>
-                            </md-button>
-                            <md-button hide show-gt-lg class="md-icon-button" ng-click="vm.changeMonth('today')"
-                                       aria-label="today">
-                                <md-icon md-font-icon="zmdi zmdi-calendar-alt" ng-style="{color: 'black'}"></md-icon>
-                            </md-button>
-                            <md-button class="md-icon-button" ng-click="vm.changeMonth('next')" aria-label="next month">
-                                <md-icon md-font-icon="zmdi zmdi-chevron-right" ng-style="{color: 'black'}"></md-icon>
-                            </md-button>
-                        </div>
-                    </div>
+        </md-card-content>
 
 
-                    <div class="margin-bottom-60" flex ui-calendar="vm.calendarOptions" ng-model="vm.eventSources"
-                         calendar="triangular-calendar" class="triangular-calendar"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
-
+    </md-card>
 </div>
+

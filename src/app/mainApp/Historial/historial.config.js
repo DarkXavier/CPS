@@ -37,8 +37,8 @@
                 controller: 'CitasController',
                 controllerAs: 'vm'
             })
-            .state('triangular.admin-default.citas-list', {
-                url: '/citas',
+            .state('triangular.admin-default.consultas-paciente', {
+                url: '/consultaPacientes',
                 templateUrl: 'app/mainApp/Historial/Citas/lista/lista.tmpl.html',
                 controller: 'ListadoCitasController',
                 controllerAs: 'vm'
@@ -104,6 +104,10 @@
                 }, {
                     name: 'Consulta Médica',
                     state: 'triangular.admin-default.consulta',
+                    type: 'link'
+                }, {
+                    name: 'Consultas',
+                    state: 'triangular.admin-default.consultas-paciente',
                     type: 'link'
                 }]
             }
