@@ -10,18 +10,18 @@
 
     function Profile(Restangular)
     {
-        var baseProfile = Restangular.all('');
+        var baseProfile = Restangular.one('persona');
 
         return {
-            list:list,
+            get:get,
             update:update,
             create:create,
             remove:remove
         };
 
 
-        function list(){
-            return baseProfile.getList().$object;
+        function get(){
+            return baseProfile.customGET().$object;
         }
 
         function update(object)

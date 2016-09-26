@@ -10,6 +10,18 @@
 
     function profileController(Profile, toastr, $scope) {
         var vm = this;
+        
+        vm.editing=false;
+        vm.generos=[
+            "Hombre",
+            "Mujer"
+        ];
+        
+        activate();
+        
+        function activate(){
+            vm.persona=Profile.get();
+        }
 
     }
 
