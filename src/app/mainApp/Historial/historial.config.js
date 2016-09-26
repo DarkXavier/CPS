@@ -43,6 +43,11 @@
                 templateUrl:'app/mainApp/Historial/Citas/citas.tmpl.html',
                 controller:'CitasController',
                 controllerAs:'vm'
+            }).state('triangular.admin-default.alergias',{
+               url:'/asignacionAlergias',
+                templateUrl:'app/mainApp/Historial/alergias/alergia.tmpl.html',
+                controller:'AlergiaAsignacionController',
+                controllerAs:'vm'
             });
 
 
@@ -58,7 +63,7 @@
                 type: 'dropdown',
                 priority: 6.1,
                 children:[{
-                    name: 'Alergias',
+                    name: 'alergias',
                     state: 'triangular.admin-default.alergias',
                     type: 'link'
 

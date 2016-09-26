@@ -6,31 +6,30 @@
 
     angular
         .module('app.mainApp')
-        .factory('Alergia',Alergia);
+        .factory('Persona',Persona);
 
-    function Alergia(Restangular)
+    function Persona(Restangular)
     {
-        var baseEnfermedad= Restangular.all('alergia');
+        var baseEnfermedad= Restangular.all('persona');
 
-        return {
+        var service = {
             list:list,
             update:update,
             create:create,
-            remove:remove,
-            getAlergiasByPerson:getAlergiasByPerson
+            remove:remove
         };
 
 
         function list(){
-            return baseEnfermedad.getList().$object;
+            return baseEnfermedad.all('list').getList().$object;
         }
-        function getAlergiasByPerson(person) {
-            return baseEnfermedad.one('person',person.id).getList();
-        }
+
+
         function update(object)
         {
             return baseEnfermedad.all(object.id).customPUT(object);
         }
+
 
         function create(object){
             return baseEnfermedad.post(object);

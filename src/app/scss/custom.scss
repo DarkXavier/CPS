@@ -155,3 +155,11 @@ Estilo para el Autocomplete
 .autocomplete-custom-template .item-title md-icon {
   height: 18px;
   width: 18px; }
+
+.inbox-list__email--active {
+  background: rgba(0,0,0, .05);
+  .md-avatar {
+    display: block;
+    animation: swing 1s;
+  }
+}
