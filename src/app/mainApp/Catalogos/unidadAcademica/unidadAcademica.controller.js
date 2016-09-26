@@ -7,9 +7,10 @@
 
     angular
         .module('app.mainApp.catalogos')
-        .controller('EnfermedadController',EnfermedadController);
+        .controller('UnidadAcademicaController',UnidadAcademicaController);
 
-    function EnfermedadController(Enfermedad,$scope, toastr, Translate,$mdDialog) {
+    /* @ngInject */
+    function UnidadAcademicaController(UnidadAcademica,$scope, toastr, Translate,$mdDialog,OAuth) {
 
         var vm = this;
 
@@ -23,11 +24,11 @@
         vm.update=update;
         vm.search_items = [];
         vm.searchText = '';
-        var enfermedad = {
+        var unidadAcademica = {
             nombre: null,
             descripcion: null
         };
-        vm.enfermedad = angular.copy(enfermedad);
+        vm.unidadAcademica = angular.copy(unidadAcademica);
         vm.numberBuffer = '';
         activate();
         init();
@@ -44,7 +45,7 @@
         }
 
         function activate() {
-            vm.enfermedades=Enfermedad.list();
+            vm.unidades_academicas=UnidadAcademica.list();
         }
         function showRegister($event) {
             clearForm();
@@ -58,7 +59,7 @@
                 .ok('Aceptar')
                 .cancel('Cancelar');
             $mdDialog.show(confirm).then(function() {
-                Enfermedad.remove(vm.enfermedad).then(function (res) {
+                UnidadAcademica.remove(vm.unidadAcademica).then(function (res) {
                     toastr.success(vm.successDeleteMessage, vm.successTitle);
                     cancel();
                     activate();
@@ -70,7 +71,7 @@
             });
         }
         function update() {
-            Enfermedad.update(vm.enfermedad).then(function (res) {
+            UnidadAcademica.update(vm.unidadAcademica).then(function (res) {
                 toastr.success(vm.successUpdateMessage, vm.successTitle);
                 cancel();
                 activate();
@@ -79,9 +80,9 @@
             });
         }
         function create() {
-            Enfermedad.create(vm.enfermedad).then(function (res) {
+            UnidadAcademica.create(vm.unidadAcademica).then(function (res) {
                 toastr.success(vm.successCreateMessage, vm.successTitle);
-                vm.enfermedad = angular.copy(enfermedad);
+                vm.unidadAcademica = angular.copy(unidadAcademica);
                 cancel();
                 activate();
             }).catch(function (res) {
@@ -90,25 +91,25 @@
         }
 
         function cancel() {
-            $scope.EnfermedadForm.$setPristine();
-            $scope.EnfermedadForm.$setUntouched();
-            vm.enfermedad = angular.copy(enfermedad);
+            $scope.UnidadForm.$setPristine();
+            $scope.UnidadForm.$setUntouched();
+            vm.unidadAcademica = angular.copy(unidadAcademica);
             vm.selectedList = null;
         }
 
         function selectedItems(project) {
             vm.selectedList = project;
-            vm.enfermedad = angular.copy(project);
+            vm.unidadAcademica = angular.copy(project);
         }
 
         function querySearch(query) {
-            var results = query ? lookup(query) : vm.enfermedades;
+            var results = query ? lookup(query) : vm.unidades_academicas;
             return results;
 
         }
 
         function lookup(search_text) {
-            vm.search_items = _.filter(vm.enfermedades, function (item) {
+            vm.search_items = _.filter(vm.unidades_academicas, function (item) {
                 return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
             });
             return vm.search_items;

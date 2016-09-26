@@ -6,13 +6,13 @@
 
     angular
         .module('app.mainApp')
-        .factory('Enfermedad',Enfermedad);
+        .factory('Alergia',Alergia);
 
-    function Enfermedad(Restangular)
+    function Alergia(Restangular)
     {
-        var baseEnfermedad= Restangular.all('enfermedad_cronica');
+        var baseEnfermedad= Restangular.all('alergia');
 
-        var service = {
+        return {
             list:list,
             update:update,
             create:create,
@@ -24,12 +24,10 @@
             return baseEnfermedad.getList().$object;
         }
 
-
         function update(object)
         {
             return baseEnfermedad.all(object.id).customPUT(object);
         }
-
 
         function create(object){
             return baseEnfermedad.post(object);
