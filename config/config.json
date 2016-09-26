@@ -13,12 +13,11 @@
                 "debug": true,
                 "staging": true,
                 "rest": {
-                    //"api": "http://genesis-dev-ses.sssirsa.com/"
                     "api": "http://52.207.209.213/"
                 },
                 "oauth": {
-                    "clientId": "OlU2WyqlkxW92Fk2Pthr4oUtnyJuRTavLCtrQvyOQD0KPWYP4jT",
-                    "clientSecret":"MMcRxDMyQOCgaJ5BlQpEiY6S9EXKNGGfOQuymureDA05abnihO8BqkP7IcCyvkaW2KSEHTKM0OvGZ"
+                    "clientId": "0qfFyCE0DrNAkoxBtk7okkHstSiRb03e9AovnXc2",
+                    "clientSecret":"MMcRxDMyQOCgaJ5BlQpEiY6S9EXKNGGfOQuymureDA05abnihO8BqkP7IcCyvkaW2KSEHTKM0OvGZOlU2WyqlkxW92Fk2Pthr4oUtnyJuRTavLCtrQvyOQD0KPWYP4jT"
                 }
             }
         }

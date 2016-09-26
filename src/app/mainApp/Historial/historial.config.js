@@ -38,6 +38,12 @@
                 controller:'carnetreviewController',
                 controllerAs:'vm'
             })
+            .state('triangular.admin-default.citas',{
+               url:'/citas',
+                templateUrl:'app/mainApp/Historial/Citas/citas.tmpl.html',
+                controller:'CitasController',
+                controllerAs:'vm'
+            });
 
 
 

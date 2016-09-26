@@ -3,7 +3,7 @@
         <md-card-content>
             <div layout="row" flex="" layout-align="space-around stretch" id="cabecera">
                 <h2 flex="70" flex-sm="100" flex-gt-xs="100" translate=""
-                    class="md-headline-1 text-center">Enfermedades Crónico Degenerativas</h2>
+                    class="md-headline-1 text-center">Unidades de Servicio</h2>
                 <md-button aria-label="fab button" class="md-fab md-scale md-fab-top-right" ng-click="vm.cancel()">
                     <md-icon md-font-icon="fa fa-plus" ng-style="{color: 'white'}">
 
@@ -23,7 +23,7 @@
                                      md-search-text-change="vm.search(vm.searchText)"
                                      md-search-text="vm.searchText"
                                      md-menu-class="autocomplete-custom-template"
-                                     md-floating-label="Búsqueda de enfermedades">
+                                     md-floating-label="Búsqueda de unidades de servicio">
                         <span
                                 md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.nombre}}</span>
                         <md-item-template><span class="item-title">
@@ -31,19 +31,19 @@
                         <span>&nbsp; {{item.nombre}}</span>
                         </span><span class="item-metadata">
                             <span class="item-metastat">
-                                <strong>{{item.descripcion }}</strong>
+                                <strong>{{item.direccion }}</strong>
                             </span>
                         </span>
                         </md-item-template>
-                        <md-not-found><span>No se encontró la enfermedad</span></md-not-found>
+                        <md-not-found><span>No se encontró la unidad de servicio</span></md-not-found>
                     </md-autocomplete>
                     <md-virtual-repeat-container class="vertical-container" flex="flex">
                         <md-list>
-                            <md-list-item ng-repeat="enfermedad in vm.enfermedades | unidadSearch:vm.searchText">
-                                <md-button ng-click="vm.selectedItems(enfermedad)"
-                                           ng-class="{'selected' : enfermedad === vm.selectedList }">
-                                    <md-icon md-svg-icon="assets/images/enfermedades.svg" class="avatar"></md-icon>
-                                    <span flex="flex">{{enfermedad.nombre }}</span>
+                            <md-list-item ng-repeat="unidad in vm.unidades_servicio | unidadSearch:vm.searchText">
+                                <md-button ng-click="vm.selectedItems(unidad)"
+                                           ng-class="{'selected' : unidad === vm.selectedList }">
+                                    <md-icon md-svg-icon="assets/images/unidades_servicio.svg" class="avatar"></md-icon>
+                                    <span flex="flex">{{unidad.nombre }}</span>
                                 </md-button>
                                 <md-divider></md-divider>
 
@@ -56,13 +56,21 @@
                 <div layout="column" flex-lg="60" flex-gt-lg="65" flex-xl="65" flex-gt-sm="100" flex-md="100"
                      flex-sm="100" flex-gt-xs="100" flex-xs="100" layout-align="start stretch">
                     <h2 class="md-headline-1 text-center">
-                        Información de Enfermedad Crónico Degenerativa</h2>
-                    <form name="EnfermedadForm">
+                        Información de Unidad de Servicio</h2>
+                    <form name="UnidadForm">
                         <md-input-container class="md-block">
                             <label>Nombre</label>
                             <input ng-required='true' type="text" name="nombre"
-                                   ng-model="vm.enfermedad.nombre"/>
-                            <div ng-messages="EnfermedadForm.nombre.$error">
+                                   ng-model="vm.unidadServicio.nombre"/>
+                            <div ng-messages="UnidadForm.nombre.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Dirección</label>
+                            <input md-no-asterisk="" required="" type="text" name="address"
+                                   ng-model="vm.unidadServicio.direccion"/>
+                            <div ng-messages="UnidadForm.address.$error">
                                 <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
                         </md-input-container>
@@ -70,8 +78,8 @@
                         <md-input-container class="md-block">
                             <label>Descripción</label>
                             <input md-no-asterisk="" required="" type="text" name="descripcion"
-                                   ng-model="vm.enfermedad.descripcion"/>
-                            <div ng-messages="EnfermedadForm.descripcion.$error">
+                                   ng-model="vm.unidadServicio.descripcion"/>
+                            <div ng-messages="UnidadForm.descripcion.$error">
                                 <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
                         </md-input-container>
@@ -81,19 +89,19 @@
                             <md-icon md-font-icon="fa fa-eraser"></md-icon>
                         </md-button>
                         <md-button aria-label="fab button"
-                                   ng-if="vm.enfermedad.id!=null && vm.enfermedad.id!=undefined"
+                                   ng-if="vm.unidadServicio.id!=null && vm.unidadServicio.id!=undefined"
                                    ng-click="vm.remove($event)" class="md-raised md-warn">
                             <md-icon md-font-icon="fa fa-trash"></md-icon>
                         </md-button>
                         <md-button aria-label="fab button"
-                                   ng-if="vm.enfermedad.id!=null && vm.enfermedad.id!=undefined"
-                                   ng-disabled="EnfermedadForm.$invalid" ng-click="vm.update()"
+                                   ng-if="vm.unidadServicio.id!=null && vm.unidadServicio.id!=undefined"
+                                   ng-disabled="UnidadForm.$invalid" ng-click="vm.update()"
                                    class="md-raised md-primary">
                             <md-icon md-font-icon="fa fa-pencil"></md-icon>
                         </md-button>
                         <md-button aria-label="fab button"
-                                   ng-if="vm.enfermedad.id==null || vm.enfermedad.id==undefined"
-                                   ng-disabled="EnfermedadForm.$invalid" ng-click="vm.create()"
+                                   ng-if="vm.unidadServicio.id==null || vm.unidadServicio.id==undefined"
+                                   ng-disabled="UnidadForm.$invalid" ng-click="vm.create()"
                                    class="md-raised md-primary">
                             <md-icon md-font-icon="fa fa-save"></md-icon>
                         </md-button>
