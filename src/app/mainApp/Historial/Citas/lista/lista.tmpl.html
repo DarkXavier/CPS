@@ -1,0 +1,96 @@
+<div layout="column" flex="100" layout-padding layout-fill>
+    <md-card class="md-padding card1" flex="flex">
+        <md-card-content>
+            <div layout="row" flex="" layout-align="space-around stretch" id="cabecera">
+                <h2 flex="70" flex-sm="100" flex-gt-xs="100" translate=""
+                    class="md-headline-1 text-center">Consultas Médicas</h2>
+            </div>
+            <div flex="100" layout="row" layout-align="space-around stretch" layout-xs="column" layout-sm="column"
+                 layout-fill="">
+
+                <div layout="column" flex-lg="40" flex-gt-lg="40" flex-xl="40" flex-gt-sm="100" flex-md="100"
+                     flex-sm="100" flex-gt-xs="100" flex-xs="100">
+                    <md-autocomplete md-selected-item="vm.selected"
+                                     md-selected-item-change="vm.selectedItemChange(vm.selected)"
+
+                                     md-items="item in vm.querySearch(vm.searchText)" md-item-text="item.consultorio"
+                                     md-min-length="2"
+                                     md-search-text-change="vm.search(vm.searchText)"
+                                     md-search-text="vm.searchText"
+                                     md-menu-class="autocomplete-custom-template"
+                                     md-floating-label="Búsqueda de citas">
+                        <span
+                                md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.consultorio}}</span>
+                        <md-item-template><span class="item-title">
+                        <md-icon md-font-icon="fa fa-briefcase"></md-icon>
+                        <span>&nbsp; {{item.consultorio}}</span>
+                        </span><span class="item-metadata">
+                            <span class="item-metastat">
+                                <strong>{{item.unidad_servicio }}</strong>
+                            </span>
+                        </span>
+                        </md-item-template>
+                        <md-not-found><span>No se encontró la Consulta Médica</span></md-not-found>
+                    </md-autocomplete>
+                    <md-virtual-repeat-container class="vertical-container" layout-fill="">
+                        <md-list class="inbox-list">
+                            <md-list-item ng-repeat="eventos in vm.eventos | eventosSearch:vm.searchText"
+                                          class="inbox-list__email inbox-list__email--animated md-3-line md-long-text">
+                                <md-button ng-click="vm.selectedItems(eventos)" layout-padding layout="row"
+                                           layout-align="start center"
+                                           ng-class="{'inbox-list__email--active' : eventos === vm.selectedList }">
+                                    <md-icon md-svg-icon="assets/images/hospital.svg" class="md-avatar"></md-icon>
+
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3><b>Consultorio:</b> {{eventos.consultorio }}</h3>
+                                        <h4><b>Fecha:</b> {{eventos.fecha}}</h4>
+                                    </div>
+                                </md-button>
+                                <md-divider></md-divider>
+
+                            </md-list-item>
+
+                        </md-list>
+
+                    </md-virtual-repeat-container>
+                </div>
+                <div layout="column" flex-lg="60" flex-gt-lg="65" flex-xl="65" flex-gt-sm="100" flex-md="100"
+                     flex-sm="100" flex-gt-xs="100" flex-xs="100" layout-align="start stretch">
+                    <h2 class="md-headline-1 text-center">
+                        Información de la consulta</h2>
+                    <form name="ListaForm">
+                        <md-input-container class="md-block">
+                            <label>Consultorio</label>
+                            <input ng-required='true' type="text" name="nombre" readonly
+                                   ng-model="vm.evento.consultorio"/>
+                            <div ng-messages="ListaForm.nombre.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block">
+                            <label>Unidad de Servicio</label>
+                            <input md-no-asterisk="" required="" type="text" name="unidad_servicio" readonly
+                                   ng-model="vm.evento.unidad_servicio"/>
+                            <div ng-messages="ListaForm.unidad_servicio.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Fecha</label>
+                            <input md-no-asterisk="" required="" type="text" name="descripcion" readonly
+                                   ng-model="vm.evento.fecha"/>
+                            <div ng-messages="ListaForm.fecha.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                    </form>
+
+                </div>
+            </div>
+        </md-card-content>
+
+
+    </md-card>
+</div>
+
