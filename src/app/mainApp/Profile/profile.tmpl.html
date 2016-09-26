@@ -1,0 +1,57 @@
+<div layout="column" flex="100" layout-padding layout-fill>
+    <md-card class="md-padding-card1" flex-gt-md="90" flex="100" layout="column">
+        <h2>Información General de Servicio</h2>
+        <div layout="row">
+            <md-input-container md-no-float class="md-block" flex="50">
+                <md-icon md-font-icon="fa fa-building-o"></md-icon>
+                <input type="text" ng-model="vm.Paciente.adscripcion" placeholder="Unidad de Procedencia"
+                       ng-disabled="vm.editing">
+            </md-input-container>
+            <md-input-container md-no-float class="md-block" flex="50">
+                <md-icon md-font-icon="fa fa-building-o"></md-icon>
+                <input type="text" ng-model="vm.Paciente.lastSite" placeholder="Ultimo Servicio Proporcionado"
+                       ng-disabled="vm.editing">
+            </md-input-container>
+        </div>
+
+        <h2>Información del Paciente</h2>
+        <div layout="row">
+            <md-input-container md-no-float class="md-block" flex="40">
+                <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                <input type="text" ng-model="vm.Paciente.nombre" placeholder="Nombre" ng-disabled="vm.editing">
+            </md-input-container>
+            <md-input-container md-no-float class="md-block" flex="30">
+                <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                <input type="text" ng-model="vm.Paciente.apellidoP" placeholder="Apellido Paterno"
+                       ng-disabled="vm.editing">
+            </md-input-container>
+            <md-input-container md-no-float class="md-block" flex="30">
+                <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                <input type="text" ng-model="vm.Paciente.apellidoM" placeholder="Apellido Materno"
+                       ng-disabled="vm.editing">
+            </md-input-container>
+        </div>
+        <div layout="row">
+
+            <div flex>
+                <md-datepicker ng-model="vm.paciente.fechaNac" md-placeholder="Fecha de Nacimiento"
+                               ng-disabled="vm.editing" flex="33"></md-datepicker>
+            </div>
+            <md-input-container md-no-float class="md-block" flex="33">
+                <md-icon md-font-icon="zmdi zmdi-male-female"></md-icon>
+                <input md-autofocus type="text" ng-model="vm.Paciente.genero" placeholder="Sexo"
+                       ng-disabled="vm.editing">
+            </md-input-container>
+            <md-input-container md-no-float class="md-block" flex="33">
+                <md-icon md-font-icon="fa fa-eyedropper"></md-icon>
+                <input type="text" ng-model="vm.Paciente.tipoS" placeholder="Tipo sanguíneo"
+                       ng-disabled="vm.editing">
+            </md-input-container>
+        </div>
+
+        <md-actions layout="row" layout-align="end center">
+
+        </md-actions>
+
+    </md-card>
+</div>
