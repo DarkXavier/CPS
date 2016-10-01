@@ -33,7 +33,19 @@
 
         function loadAdminMenu() {
             triMenu.menu = [];
-            triMenu.menu = [
+            triMenu.menu = [{
+                name: 'Bienvenida',
+                icon: 'zmdi zmdi-home',
+                type: 'dropdown',
+                priority: 1,
+                children: [
+                    {
+                        name: 'Inicio',
+                        state: 'triangular.admin-default.bienvenida',
+                        type: 'link'
+                    }
+                ]
+            },
                 {
                     name: 'Servicio Medico',
                     icon: 'fa fa-medkit',
@@ -155,7 +167,19 @@
 
         function loadMedicoMenu() {
             triMenu.menu = [];
-            triMenu.menu = [
+            triMenu.menu = [{
+                name: 'Bienvenida',
+                icon: 'zmdi zmdi-home',
+                type: 'dropdown',
+                priority: 1,
+                children: [
+                    {
+                        name: 'Inicio',
+                        state: 'triangular.admin-default.bienvenida',
+                        type: 'link'
+                    }
+                ]
+            },
                 {
                     name: 'Servicio Medico',
                     icon: 'fa fa-medkit',
@@ -232,6 +256,19 @@
         function loadPacienteMenu() {
             triMenu.menu = [];
             triMenu.menu = [
+                {
+                    name: 'Bienvenida',
+                    icon: 'zmdi zmdi-home',
+                    type: 'dropdown',
+                    priority: 1,
+                    children: [
+                        {
+                            name: 'Inicio',
+                            state: 'triangular.admin-default.bienvenida',
+                            type: 'link'
+                        }
+                    ]
+                },
                 {
                     name: 'Servicio Medico',
                     icon: 'fa fa-medkit',

@@ -6,52 +6,55 @@
         .module('app.mainApp.catalogos')
         .config(moduleConfig);
 
-    function moduleConfig($stateProvider, triMenuProvider, $translatePartialLoaderProvider) {
+    function moduleConfig($stateProvider, $translatePartialLoaderProvider) {
         $translatePartialLoaderProvider.addPart('app/mainApp/Catalogos');
         $stateProvider
             .state('triangular.admin-default.enfermedad', {
-                // set the url of this page
                 url: '/enfermedad',
-                //data: {
-                //  roles: ['Administrador']
-                //},
-                // set the html template to show on this page
+                data: {
+                    roles: ['Administrador']
+                },
                 templateUrl: 'app/mainApp/Catalogos/EnfermedadesCronicas/enfermedad.tmpl.html',
-                // set the controller to load for this page
                 controller: 'EnfermedadController',
                 controllerAs: 'vm'
             })
             .state('triangular.admin-default.vacunas', {
-                // set the url of this page
                 url: '/vacunas',
-                // set the html template to show on this page
+                data: {
+                    roles: ['Administrador','Medico','Paciente']
+                },
                 templateUrl: 'app/mainApp/Catalogos/Vacunas/vacunas.tmpl.html',
-                // set the controller to load for this page
                 controller: 'vacunasController',
                 controllerAs: 'vm'
             })
-
             .state('triangular.admin-default.unidad-servicio', {
                 url: '/unidadServicio',
+                data: {
+                    roles: ['Administrador']
+                },
                 templateUrl: 'app/mainApp/Catalogos/unidadServicio/unidadServicio.tmpl.html',
                 controller: 'UnidadServicioController',
                 controllerAs: 'vm'
             })
             .state('triangular.admin-default.unidad-academicas', {
                 url: '/unidadAcademica',
+                data: {
+                    roles: ['Administrador']
+                },
                 templateUrl: 'app/mainApp/Catalogos/unidadAcademica/unidadAcademica.tmpl.html',
                 controller: 'UnidadAcademicaController',
                 controllerAs: 'vm'
 
-            }).state('triangular.admin-default.alergia', {
-            url: '/alergia',
-            templateUrl: 'app/mainApp/Catalogos/alergia/alergia.tmpl.html',
-            // set the controller to load for this page
-            controller: 'AlergiaController',
-            controllerAs: 'vm'
-        });
-
-
+            })
+            .state('triangular.admin-default.alergia', {
+                url: '/alergia',
+                data: {
+                    roles: ['Administrador']
+                },
+                templateUrl: 'app/mainApp/Catalogos/alergia/alergia.tmpl.html',
+                controller: 'AlergiaController',
+                controllerAs: 'vm'
+            });
 
 
     }
