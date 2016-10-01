@@ -52,33 +52,6 @@
         });
 
 
-        triMenuProvider.addMenu({
-            name: 'Catalogos',
-            icon: 'fa fa-archive',
-            type: 'dropdown',
-            children: [{
-                name: 'Vacunas',
-                state: 'triangular.admin-default.vacunas',
-                type: 'link'
-            }, {
-                name: 'Enfermedades',
-                state: 'triangular.admin-default.enfermedad',
-                type: 'link'
-            }, {
-                name: 'alergias',
-                state: 'triangular.admin-default.alergia',
-                type: 'link'
-            }, {
-                name: 'Unidades de Servicio',
-                state: 'triangular.admin-default.unidad-servicio',
-                type: 'link'
-            }, {
-                name: 'Unidades Académicas',
-                state: 'triangular.admin-default.unidad-academicas',
-                type: 'link'
-            }]
-
-        });
 
 
     }

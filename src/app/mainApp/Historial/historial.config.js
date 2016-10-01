@@ -55,64 +55,6 @@
                 controller: 'EnfermedadesAsignacionController',
                 controllerAs: 'vm'
             });
-        triMenuProvider.addMenu({
-            name: 'Servicio Medico',
-            icon: 'fa fa-medkit',
-            type: 'dropdown',
-            priority: 6.1,
-            children: [{
-                name: 'Historia Clinica',
-                icon: 'zmdi zmdi-hospital-alt',
-                type: 'dropdown',
-                priority: 6.1,
-                children: [{
-                    name: 'Alergias',
-                    state: 'triangular.admin-default.alergias',
-                    type: 'link'
-
-                }, {
-                    name: 'Enfermedades Cronico Degenerativas',
-                    state: 'triangular.admin-default.enfermedades-asignacion',
-                    type: 'link'
-
-                }, {
-                    name: 'Esquema de Vacunación',
-                    state: 'triangular.admin-default.vacunas',
-                    type: 'link'
-
-                }, {
-                    name: 'Citas Previas',
-                    state: 'triangular.admin-default.lastCitas',
-                    type: 'link'
-
-                }, {
-                    name: 'Contacto',
-                    state: 'triangular.admin-default.datosContacto',
-                    type: 'link'
-
-                }]
-            }, {
-                name: 'Servicio Médico',
-                icon: 'fa fa-stethoscope',
-                type: 'dropdown',
-                priority: 6.1,
-                children: [{
-                    name: 'Cita Médica',
-                    state: 'triangular.admin-default.citas',
-                    type: 'link'
-
-                }, {
-                    name: 'Consulta Médica',
-                    state: 'triangular.admin-default.consulta',
-                    type: 'link'
-                }, {
-                    name: 'Consultas',
-                    state: 'triangular.admin-default.consultas-paciente',
-                    type: 'link'
-                }]
-            }
-            ]
-        });
 
     }
 
