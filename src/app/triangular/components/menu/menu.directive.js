@@ -33,9 +33,11 @@
     }
 
     /* @ngInject */
-    function triMenuController(triMenu) {
+    function triMenuController(triMenu,AUTH_EVENTS,$rootScope,dynamicMenu) {
         var triMenuController = this;
-        // get the menu and order it
-        triMenuController.menu = triMenu.menu;
+        $rootScope.$on(AUTH_EVENTS.sessionRestore, function() {
+            dynamicMenu.loadMenu();
+            triMenuController.menu = triMenu.menu;
+        });
     }
 })();
