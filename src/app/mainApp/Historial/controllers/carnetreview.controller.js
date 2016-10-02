@@ -9,7 +9,7 @@
         .module('app.mainApp.historial')
         .controller('carnetreviewController', carnetreviewController);
 
-    function carnetreviewController($timeout, $q, $log) {
+    function carnetreviewController($timeout, $q, $log,PersonaAlergia,PersonaEnfermedad) {
         var vm = this;
         // list of `state` value/display objects
         vm.states             = loadAll();
