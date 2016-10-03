@@ -16,14 +16,17 @@
             update: update,
             create: create,
             remove: remove,
-            get: get
+            get: get,
+            listEsp:listEsp
         };
 
 
         function list() {
             return baseEnfermedad.all('list').getList().$object;
         }
-
+        function listEsp() {
+            return baseEnfermedad.all('list').getList();
+        }
         function get() {
             return baseEnfermedad.customGET().$object;
 

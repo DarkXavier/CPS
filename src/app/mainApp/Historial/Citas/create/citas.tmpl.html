@@ -149,10 +149,13 @@
                             </md-button>
                         </div>
                     </div>
-
-
+                    <div layout='row' layout-sm='column' ng-show='vm.loadingCalendario' layout-align='center center'>
+                        <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+                    </div>
+                    <div ng-show='!vm.loadingCalendario'>
                     <div class="margin-bottom-60" ng-if="vm.selectedPacient!=null" flex ui-calendar="vm.calendarOptions" ng-model="vm.eventSources"
                          calendar="triangular-calendar" class="triangular-calendar"></div>
+                    </div>
                 </div>
 
             </div>
