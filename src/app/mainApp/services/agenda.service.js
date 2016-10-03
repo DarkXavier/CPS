@@ -6,10 +6,10 @@
 
     angular
         .module('app.mainApp')
-        .factory('Persona', Persona);
+        .factory('Agenda', Agenda);
 
-    function Persona(Restangular) {
-        var baseEnfermedad = Restangular.all('persona');
+    function Agenda(Restangular) {
+        var baseUrl = Restangular.all('agenda');
 
         return {
             list: list,
@@ -21,29 +21,26 @@
 
 
         function list() {
-            return baseEnfermedad.all('list').getList().$object;
+            return baseUrl.getList().$object;
         }
 
         function get() {
-            return baseEnfermedad.customGET().$object;
+            return baseUrl.customGET().$object;
 
         }
 
         function update(object) {
-            return baseEnfermedad.all(object.id).customPUT(object);
+            return baseUrl.all(object.id).customPUT(object);
         }
 
 
         function create(object) {
-            return baseEnfermedad.post(object);
+            return baseUrl.post(object);
         }
 
         function remove(object) {
-            return baseEnfermedad.customDELETE(object.id, null, {'content-type': 'application/json'});
+            return baseUrl.customDELETE(object.id, null, {'content-type': 'application/json'});
         }
-
-
-        return service;
     }
 
 })();
