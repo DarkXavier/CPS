@@ -9,18 +9,18 @@
         .module('app.mainApp.historial')
         .controller('carnetreviewController', carnetreviewController);
 
-    function carnetreviewController($timeout, $q, $log,Vacunas,Enfermedad,Persona,PersonaMedicos,Alergia,Translate) {
+    function carnetreviewController($timeout, $q, $log,Vacunas,Enfermedad,Persona,PersonaMedicos,Alergia,Translate,Session) {
         var vm = this;
         //Funciones
-        
+        vm.editing=true;
         vm.querySearch = querySearch;
-        vm.querySearch = querySearch;
-        vm.selectedItemChange = selectedItemChange;
-        vm.searchTextChange = searchTextChange;
+        vm.pacientes = [];
         vm.verMas = verMas;
         vm.cancel = cancel;
         vm.enable=enable;
         vm.buscar=buscar;
+        vm.obtenerCarnet=obtenerCarnet;
+        vm.show=false;
         //Variables
         vm.search_items = [];
         vm.selectedItem = null;
@@ -41,22 +41,16 @@
         init();
 
         function querySearch(query) {
-            var results = query ? vm.pacientes.filter(createFilterFor(query)) : vm.pacientes, deferred;
-
-            deferred = $q.defer();
-            $timeout(function () {
-                deferred.resolve(results);
-            }, Math.random() * 1000, false);
-            return deferred.promise;
+            return query ? lookup(query) :vm.pacientes;
         }
 
-        function searchTextChange(text) {
-            $log.info('Texto cambiado a ' + text);
+        function lookup(search_text) {
+            vm.search_items = _.filter(vm.pacientes, function (item) {
+                return item.boleta_empleado.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
+            });
+            return vm.search_items;
         }
 
-        function selectedItemChange(item) {
-            $log.info('Texto cambiado ' + item);
-        }
 
         function init() {
             vm.successTitle = Translate.translate('MAIN.MSG.SUCCESS_TITLE');
@@ -65,6 +59,19 @@
             vm.errorMessage = Translate.translate('MAIN.MSG.ERROR_MESSAGE');
             vm.successUpdateMessage = Translate.translate('MAIN.MSG.GENERIC_SUCCESS_UPDATE');
             vm.successDeleteMessage = Translate.translate('MAIN.MSG.GENERIC_SUCCESS_DELETE');
+            if(vm.isPacient){
+                vm.selectedPacient=Persona.get();
+                vm.selectedPacient.fecha_nacimiento=moment(vm.selectedPacient.fecha_nacimiento).format('DD-MM-YYYY');
+                vm.obtenerCarnet(vm.selectedPacient);
+            }else {
+                Persona.listEsp().then(function (res) {
+                    vm.pacientes= _.filter(res, function (item) {
+                        return !(item.id == Session.userInformation.id);
+                    });
+                });
+
+            }
+
         }
 
 
@@ -80,9 +87,22 @@
 
 
         function cancel() {
-            $scope.AsignacionEnfermedad.$setPristine();
-            $scope.AsignacionEnfermedad.$setUntouched();
+            vm.show=false;
+            //Variables
+            vm.search_items = [];
+            vm.selectedItem = null;
+            vm.searchText = null;
+            vm.enfermedadPersona=[];
+            vm.vacunaPersona=[];
+            vm.datosMedicos=null;
+            vm.alergiaPersona=[];
+            vm.searchText = '';
+            var enfermedad = {
+                nombre: null,
+                descripcion: null
+            };
             vm.enfermedad = angular.copy(enfermedad);
+            vm.numberBuffer = '';
             vm.disabled=true;
         }
         function buscar(){
@@ -92,19 +112,22 @@
 
         };
         function verMas(persona) {
-
             obtenerAlergias(persona);
             obtenerVacunas(persona);
             obtenerEnfermededaes(persona);
+            obtenerCarnet(persona);
+            vm.show=true;
+            console.log(vm.vacunaPersona);
+            console.log(vm.enfermedadPersona);
         }
         function obtenerEnfermededaes(persona) {
             vm.enfermedadPersona=[];
             Enfermedad.getEnfermedadesByPerson(persona).then(function (res) {
-                vm.enfermedadesPersona=res;
+                vm.enfermedadPersona=res;
                 res.forEach(function (value) {
                     vm.enfermedadPersona.push(value.enfermedad_name);
                 });
-                console.log(vm.enfermedadPersona);
+
             });
         }
         function obtenerAlergias(persona) {
@@ -113,19 +136,28 @@
                 vm.alergiaPersona=res;
                 res.forEach(function (value) {
                     vm.alergiaPersona.push(value.enfermedad_name);
+
                 });
-                console.log(vm.alergiaPersona);
+
 
             });
         }
         function obtenerVacunas(persona) {
             vm.vacunaPersona=[];
-            Vacunas.getEnfermedadesByPerson(persona).then(function (res) {
+            Vacunas.getVacunasByPerson(persona).then(function (res) {
                 vm.vacunaPersona=res;
                 res.forEach(function (value) {
                     vm.vacunaPersona.push(value.vacuna_name);
                 });
-                console.log(vm.vacunaPersona);
+
+            });
+        }
+        function obtenerCarnet(persona) {
+            persona.id_paciente=persona.boleta_empleado;
+            vm.datosMedicos=[];
+            Persona.carnet(persona).then(function (res) {
+                vm.datosMedicos=res;
+                
             });
         }
 

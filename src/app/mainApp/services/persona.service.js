@@ -8,7 +8,7 @@
         .module('app.mainApp')
         .factory('Persona', Persona);
 
-    function Persona(Restangular) {
+    function Persona($q, Restangular) {
         var baseEnfermedad = Restangular.all('persona');
 
         return {
@@ -17,7 +17,8 @@
             create: create,
             remove: remove,
             get: get,
-            listEsp:listEsp
+            listEsp:listEsp,
+            carnet:carnet
         };
 
 
@@ -44,9 +45,20 @@
         function remove(object) {
             return baseEnfermedad.customDELETE(object.id, null, {'content-type': 'application/json'});
         }
+        function carnet(object){
+            var deferred = $q.defer();
+            Restangular.all('datos_persona').customPOST(object).then(function(res){
+                deferred.resolve(res);
+               // console.log(res);
+            }).catch(function(err){
+                deferred.reject(err);
+                //console.log(err);
+            })
+            return deferred.promise;
+        }
 
 
-        return service;
+
     }
 
 })();

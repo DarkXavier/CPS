@@ -6,33 +6,41 @@
                 <md-card-title-text>
                     <span class="md-headline">Lectura de Carnet</span>
                     <div layout="row">
+                        <md-icon md-font-icon="fa fa-user"></md-icon>
                         <md-autocomplete md-selected-item="vm.selectedPacient"
                                          md-selected-item-change="vm.selectedItemChange(vm.selectedPacient)"
-                                         md-items="item in vm.querySearch(vm.searchText)" md-item-text="item.nombre"
+                                         md-items="item in vm.querySearch(vm.searchText)" md-item-text="item.boleta_empleado"
                                          md-min-length="3"
                                          md-search-text-change="vm.search(vm.searchText)"
                                          md-search-text="vm.searchText"
                                          md-menu-class="autocomplete-custom-template"
                                          md-floating-label="Búsqueda de  personas">
                         <span
-                                md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.nombre}}</span>
+                                md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.boleta_empleado}}</span>
                             <md-item-template><span class="item-title">
-                        <md-icon md-font-icon="fa fa-briefcase"></md-icon>
-                        <span>&nbsp; {{item.nombre}}</span>
+                        <md-icon md-font-icon="fa fa-user"></md-icon>
+                        <span>&nbsp; {{item.boleta_empleado}}</span>
                         </span>
                             </md-item-template>
                             <md-not-found><span>No se encontró a la persona </span></md-not-found>
                         </md-autocomplete>
                         <md-input-container md-no-float class="md-block" flex>
                             <md-icon md-font-icon="fa fa-user"></md-icon>
-                            <input type="text" ng-model="vm.Paciente.CURP" placeholder="CURP"
+                            <input type="text" ng-model="vm.selectedPacient.curp" placeholder="CURP"
                                    ng-disabled="vm.editing">
                         </md-input-container>
                     </div>
                 </md-card-title-text>
                 <md-card-title-media>
-                    <div class="md-media-md card-media" ng-show="vm.Paciente.CURP!=null">
-                        <img src="assets/images/files/ejemplo2.jpg">
+                    <div flex="100" flex-xs="100" flex-sm="100">
+                        <h3>Foto</h3>
+                        <div layout="row" layout-xs="column" layout-align-xs="center center" layout-sm="column"
+                             layout-align-sm="center center">
+
+                            <div class="md-media-md card-media">
+                                <img ngf-src="vm.selectedPacient.foto" class="thumb" width="180px" height="180px">
+                            </div>
+                        </div>
                     </div>
                 </md-card-title-media>
             </md-card-title>
@@ -46,47 +54,49 @@
                     </md-input-container>
                     <md-input-container md-no-float class="md-block" flex="50">
                         <md-icon md-font-icon="fa fa-building-o"></md-icon>
-                        <input type="text" ng-model="vm.Paciente.lastSite" placeholder="Ultimo Servicio Proporcionado"
+                        <input type="text" ng-model="vm.datosMedicos.last_unidad" placeholder="Ultimo Servicio Proporcionado"
                                ng-disabled="vm.editing">
                     </md-input-container>
                 </div>
 
                 <h2>Información del Paciente</h2>
                 <div layout="row">
-                    <md-input-container md-no-float class="md-block" flex="40">
-                        <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
-                        <input type="text" ng-model="vm.Paciente.nombre" placeholder="Nombre" ng-disabled="vm.editing">
-                    </md-input-container>
                     <md-input-container md-no-float class="md-block" flex="30">
                         <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
-                        <input type="text" ng-model="vm.Paciente.apellidoP" placeholder="Apellido Paterno"
+                        <input type="text" ng-model="vm.selectedPacient.nombre" placeholder="Nombre"
                                ng-disabled="vm.editing">
                     </md-input-container>
                     <md-input-container md-no-float class="md-block" flex="30">
                         <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
-                        <input type="text" ng-model="vm.Paciente.apellidoM" placeholder="Apellido Materno"
+                        <input type="text" ng-model="vm.selectedPacient.apellido_paterno" placeholder="Apellido Paterno"
+                               ng-disabled="vm.editing">
+                    </md-input-container>
+                    <md-input-container md-no-float class="md-block" flex="30">
+                        <md-icon md-font-icon="zmdi zmdi-account"></md-icon>
+                        <input type="text" ng-model="vm.selectedPacient.apellido_materno" placeholder="Apellido Materno"
                                ng-disabled="vm.editing">
                     </md-input-container>
                 </div>
                 <div layout="row">
 
-                    <div flex>
-                        <md-datepicker ng-model="vm.paciente.fechaNac" md-placeholder="Fecha de Nacimiento"
-                                       ng-disabled="vm.editing" flex="33"></md-datepicker>
-                    </div>
+                    <md-input-container md-no-float class="md-block" flex="33">
+                        <md-icon md-font-icon="fa fa-calendar"></md-icon>
+                        <input type="text" ng-model="vm.selectedPacient.fecha_nacimiento" placeholder="Apellido Materno"
+                               ng-disabled="vm.editing">
+                    </md-input-container>
                     <md-input-container md-no-float class="md-block" flex="33">
                         <md-icon md-font-icon="zmdi zmdi-male-female"></md-icon>
-                        <input md-autofocus type="text" ng-model="vm.Paciente.genero" placeholder="Sexo"
+                        <input md-autofocus type="text" ng-model="vm.selectedPacient.genero" placeholder="Sexo"
                                ng-disabled="vm.editing">
                     </md-input-container>
                     <md-input-container md-no-float class="md-block" flex="33">
                         <md-icon md-font-icon="fa fa-eyedropper"></md-icon>
-                        <input type="text" ng-model="vm.Paciente.tipoS" placeholder="Tipo sanguíneo"
+                        <input type="text" ng-model="vm.datosMedicos.tipo_sanguineo" placeholder="Tipo sanguíneo"
                                ng-disabled="vm.editing">
                     </md-input-container>
                 </div>
 
-
+<!--
                 <div layout="row">
                     <md-input-container md-no-float class="md-block" flex="30">
                         <md-icon md-font-icon="fa fa-medkit"></md-icon>
@@ -105,48 +115,33 @@
                                placeholder="Codigo de Vacunas"
                                ng-disabled="vm.editing">
                     </md-input-container>
-                </div>
-                <h2>Próxima Cita</h2>
-                <h3>Datos de la Cita</h3>
-                <div layout="row">
-
-                    <md-input-container md-no-float class="md-block" flex="50">
-                        <label translate>Tipo de consulta</label>
-                        <md-select ng-model="vm.user.cita.type" name="select"
-                                   ng-disabled="vm.editing">
-                            <md-option ng-repeat="type in vm.types" ng-value="type.id">{{type.value}}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-
-                    <div flex="50">
-                        <md-datepicker ng-model="vm.user.cita.fecha" md-placeholder="Fecha de cita"
-                                       ng-disabled="vm.editing"></md-datepicker>
-                    </div>
-                </div>
+                </div>-->
                 <div layout="row">
                     <md-input-container flex="35">
-                        <md-switch class="md-warn" ng-model="vm.Paciente.autorizaTranplante" ng-disabled="vm.editing"
+                        <md-switch class="md-warn" ng-model="vm.datosMedicos.auto_transplante==1" ng-disabled="vm.editing"
                                    aria-label="Primary Switch">
                             Autorización de Transplantes
                         </md-switch>
                     </md-input-container>
                     <md-input-container flex="35">
-                        <md-switch class="md-warn" ng-model="vm.Paciente.autorizaTransfusion" ng-disabled="vm.editing"
+                        <md-switch class="md-warn" ng-model="vm.datosMedicos.auto_transfusiones==1" ng-disabled="vm.editing"
                                    aria-label="Primary Switch">
                             Autorización de Transfusiones
                         </md-switch>
                     </md-input-container>
                     <md-input-container flex="30">
                         <md-switch class="md-accent" ng-model="vm.editing" aria-label="Primary Switch"
-                                   ng-disabled="true">
+                                   ng-disabled="false">
                             Editar Campos
                         </md-switch>
                     </md-input-container>
                 </div>
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="vm.verMas">Ver Detalles</md-button>
+                <md-button ng-click="vm.verMas(vm.selectedPacient)">Ver Detalles</md-button>
+            </md-card-actions>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-click="vm.cancel()">Cancelar</md-button>
             </md-card-actions>
         </md-card>
     </div>
@@ -154,7 +149,7 @@
     <div layout="row" layout-align="center center">
         <md-card flex="90">
             <md-tabs class="md-primary" md-dynamic-height md-border-bottom Jmd-selected="selectedTabIndex"
-                     ng-show="vm.Paciente.CURP!=null">
+                     ng-show="vm.disabled">
                 <md-tab label="Alergias">
                     <md-content class="md-padding">
                         <h3>Alergias</h3>
@@ -171,16 +166,16 @@
                                 <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
                                     <thead md-head md-order="query.order" md-on-reorder="getDesserts">
                                     <tr md-row>
-                                        <th md-column md-order-by="nameToLower"><span>id</span></th>
                                         <th md-column md-numeric>Substancia Alergica</th>
+                                        <th md-column md-numeric>fecha</th>
 
                                     </tr>
                                     </thead>
                                     <tbody md-body>
                                     <tr md-row md-select="dessert" md-select-id="name" md-auto-select
-                                        ng-repeat="alergia in vm.alergias">
-                                        <td md-cell>{{alergia.id}}</td>
-                                        <td md-cell>{{alergia.name}}</td>
+                                        ng-repeat="alergia in vm.alergiaPersona">
+                                        <td md-cell>{{alergia.alergia_name}}</td>
+                                        <td md-cell>{{alergia.fecha}}</td>
 
                                     </tr>
                                     </tbody>
@@ -217,16 +212,18 @@
                                 <thead md-head md-order="query.order" md-on-reorder="getDesserts">
                                 <tr md-row>
                                     <th md-column md-order-by="nameToLower"><span>Vacuna</span></th>
-                                    <th md-column md-numeric>1º dosis</th>
-                                    <th md-column md-numeric>2º dosis</th>
+                                    <th md-column md-numeric>Fecha de Atención</th>
+                                    <th md-column md-numeric>No de Dosis</th>
+                                    <th md-column md-numeric>Tipo</th>
                                 </tr>
                                 </thead>
                                 <tbody md-body>
                                 <tr md-row md-select="dessert" md-select-id="name" md-auto-select
-                                    ng-repeat="vacuna in vm.vacunas">
-                                    <td md-cell>{{vacuna.name}}</td>
-                                    <td md-cell>{{vacuna.dosis}}</td>
-                                    <td md-cell>{{vacuna.fecha}}</td>
+                                    ng-repeat="vacuna in vm.vacunaPersona">
+                                    <td md-cell>{{vacuna.vacuna_name}}</td>
+                                    <td md-cell>{{vacuna.fecha_atencion}}</td>
+                                    <td md-cell>{{vacuna.num_dosis_basicas}}</td>
+                                    <td md-cell>{{vacuna.tipo}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -252,15 +249,17 @@
                                     <thead md-head md-order="query.order" md-on-reorder="getDesserts">
                                     <tr md-row>
                                         <th md-column md-order-by="nameToLower"><span>Id</span></th>
-                                        <th md-column md-numeric>Enfermedad</th>
+                                        <th md-column >Enfermedad</th>
+                                        <th md-column >Fecha</th>
 
                                     </tr>
                                     </thead>
                                     <tbody md-body>
                                     <tr md-row md-select="enfermedad" md-select-id="name" md-auto-select
-                                        ng-repeat="enfermedad in vm.enfermedades">
+                                        ng-repeat="enfermedad in vm.enfermedadPersona">
                                         <td md-cell>{{enfermedad.id}}</td>
-                                        <td md-cell>{{enfermedad.name}}</td>
+                                        <td md-cell>{{enfermedad.enfermedad_name}}</td>
+                                        <td md-cell>{{enfermedad.fecha}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
