@@ -9,17 +9,22 @@
         .module('app.mainApp.historial')
         .controller('carnetreviewController', carnetreviewController);
 
-    function carnetreviewController($timeout, $q, $log,Vacunas,Enfermedad,Persona,PersonaMedicos,Alergia) {
+    function carnetreviewController($timeout, $q, $log,Vacunas,Enfermedad,Persona,PersonaMedicos,Alergia,Translate) {
         var vm = this;
         //Funciones
-        vm.lookup = lookup;
+        
         vm.querySearch = querySearch;
+        vm.querySearch = querySearch;
+        vm.selectedItemChange = selectedItemChange;
+        vm.searchTextChange = searchTextChange;
         vm.verMas = verMas;
         vm.cancel = cancel;
         vm.enable=enable;
         vm.buscar=buscar;
         //Variables
         vm.search_items = [];
+        vm.selectedItem = null;
+        vm.searchText = null;
         vm.enfermedadPersona=[];
         vm.vacunaPersona=[];
         vm.datosMedicos;
@@ -35,6 +40,23 @@
         activate();
         init();
 
+        function querySearch(query) {
+            var results = query ? vm.pacientes.filter(createFilterFor(query)) : vm.pacientes, deferred;
+
+            deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(results);
+            }, Math.random() * 1000, false);
+            return deferred.promise;
+        }
+
+        function searchTextChange(text) {
+            $log.info('Texto cambiado a ' + text);
+        }
+
+        function selectedItemChange(item) {
+            $log.info('Texto cambiado ' + item);
+        }
 
         function init() {
             vm.successTitle = Translate.translate('MAIN.MSG.SUCCESS_TITLE');
@@ -49,7 +71,7 @@
         function activate() {
             vm.enfermedades=Enfermedad.list();
             vm.alergias=Alergia.list();
-            vm.vacunas=Vacuna.list();
+            vm.vacunas=Vacunas.list();
             vm.personas=Persona.list();
         }
         function enable() {
@@ -82,6 +104,7 @@
                 res.forEach(function (value) {
                     vm.enfermedadPersona.push(value.enfermedad_name);
                 });
+                console.log(vm.enfermedadPersona);
             });
         }
         function obtenerAlergias(persona) {
@@ -89,8 +112,10 @@
             Alergia.getAlergiasByPerson(persona).then(function (res) {
                 vm.alergiaPersona=res;
                 res.forEach(function (value) {
-                    vm.enfermedadPersona.push(value.enfermedad_name);
+                    vm.alergiaPersona.push(value.enfermedad_name);
                 });
+                console.log(vm.alergiaPersona);
+
             });
         }
         function obtenerVacunas(persona) {
@@ -100,21 +125,11 @@
                 res.forEach(function (value) {
                     vm.vacunaPersona.push(value.vacuna_name);
                 });
+                console.log(vm.vacunaPersona);
             });
         }
 
-        function querySearch(query) {
-            var results = query ? lookup(query) : vm.personas;
-            return results;
 
-        }
-
-        function lookup(search_text) {
-            vm.search_items = _.filter(vm.personas, function (item) {
-                return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
-            });
-            return vm.search_items;
-        }
 
     }
 
