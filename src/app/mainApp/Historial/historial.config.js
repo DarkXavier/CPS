@@ -34,6 +34,7 @@
                 },
                 templateUrl: 'app/mainApp/Historial/datos_contacto.html'
             })
+            
             .state('triangular.admin-default.carnetreview', {
                 url: '/carnet',
                 data: {

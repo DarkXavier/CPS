@@ -1,5 +1,5 @@
 /**
- * Created by franciscojaviercerdamartinez on 24/09/16.
+ * Created by franciscojaviercerdamartinez on 2/10/16.
  */
 (function () {
     angular
@@ -7,9 +7,9 @@
         .config(moduleConfig);
 
     function moduleConfig($stateProvider, triMenuProvider) {
-
-
-
+        $stateProvider
+           
     }
+
 
 })();
