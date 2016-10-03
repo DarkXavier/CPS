@@ -54,7 +54,6 @@
             vm.errorUpdate="Error al actualizar vacuna";
             vm.successUpdate="Éxito al actualizar vacuna";
             vm.vaccines=Vacunas.list();
-            console.log(vm.vaccines);
             vm.filteredVaccines=vm.vaccines;
         }
 
@@ -132,7 +131,6 @@
         function clickCopy(item){
             vm.vaccine=angular.copy(item);
             vm.selectedVaccine=null;
-            console.log(vm.vaccine);
         }
 
     }

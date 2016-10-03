@@ -21,6 +21,7 @@
         
         function activate(){
             vm.persona=Profile.get();
+            console.log(vm.persona);
         }
 
     }
