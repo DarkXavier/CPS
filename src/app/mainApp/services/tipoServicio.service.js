@@ -16,9 +16,12 @@
             list:list,
             update:update,
             create:create,
-            remove:remove
+            remove:remove,
+            get:get
         };
-
+        function get(id) {
+            return baseEnfermedad.customGET(id);
+        }
 
         function list(){
             return baseEnfermedad.getList().$object;

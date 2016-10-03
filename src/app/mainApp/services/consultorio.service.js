@@ -31,8 +31,8 @@
             return baseEnfermedad.all('list').getList().$object;
         }
 
-        function get() {
-            return baseEnfermedad.customGET().$object;
+        function get(id) {
+            return baseEnfermedad.get(id).$object;
 
         }
 
@@ -49,8 +49,6 @@
             return baseEnfermedad.customDELETE(object.id, null, {'content-type': 'application/json'});
         }
 
-
-        return service;
     }
 
 })();
