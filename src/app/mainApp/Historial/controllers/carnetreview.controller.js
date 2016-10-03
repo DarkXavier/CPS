@@ -9,145 +9,106 @@
         .module('app.mainApp.historial')
         .controller('carnetreviewController', carnetreviewController);
 
-    function carnetreviewController($timeout, $q, $log,PersonaAlergia,PersonaEnfermedad) {
+    function carnetreviewController($timeout, $q, $log,Vacunas,PersonaEnfermedad,Persona) {
         var vm = this;
-        // list of `state` value/display objects
-        vm.states             = loadAll();
-        vm.selectedItem       = null;
-        vm.searchText         = null;
-        vm.querySearch        = querySearch;
-        vm.simulateQuery      = true;
-        vm.isDisabled         = false;
-        vm.selectedItemChange = selectedItemChange;
-        vm.searchTextChange   = searchTextChange;
 
-        //////////////////
-        function querySearch (query) {
-            var results = query ? vm.states.filter( createFilterFor(query) ) : vm.states, deferred;
-            if(self.simulateQuery) {
-                deferred = $q.defer();
-                $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-                return deferred.promise;
-            } else {
-                return results;
-            }
+        vm.lookup = lookup;
+        vm.querySearch = querySearch;
+        vm.verMas = verMas;
+        vm.cancel = cancel;
+        vm.enable=enable;
+        vm.search_items = [];
+        vm.enfermedadPersona=[];
+        vm.vacunaPersona=[];
+        vm.alergiaPersona=[];
+        vm.searchText = '';
+        var enfermedad = {
+            nombre: null,
+            descripcion: null
+        };
+        vm.enfermedad = angular.copy(enfermedad);
+        vm.numberBuffer = '';
+        vm.disabled=true;
+        activate();
+        init();
+        function init() {
+            vm.successTitle = Translate.translate('MAIN.MSG.SUCCESS_TITLE');
+            vm.errorTitle = Translate.translate('MAIN.MSG.ERROR_TITLE');
+            vm.successCreateMessage = Translate.translate('MAIN.MSG.SUCESSS_TRANSPORTE_MESSAGE');
+            vm.errorMessage = Translate.translate('MAIN.MSG.ERROR_MESSAGE');
+            vm.successUpdateMessage = Translate.translate('MAIN.MSG.GENERIC_SUCCESS_UPDATE');
+            vm.successDeleteMessage = Translate.translate('MAIN.MSG.GENERIC_SUCCESS_DELETE');
         }
 
-        function searchTextChange(text) {
-            $log.info('Texto cambiado a ' + text);
+
+        function activate() {
+            vm.enfermedades=Enfermedad.list();
+            vm.alergias=Alergia.list();
+            vm.vacunas=Vacuna.list();
+            vm.personas=Persona.list();
+        }
+        function enable() {
+            vm.disabled=false;
         }
 
-        function selectedItemChange(item) {
-            $log.info('Texto cambiado ' + item);
+
+        function cancel() {
+            $scope.AsignacionEnfermedad.$setPristine();
+            $scope.AsignacionEnfermedad.$setUntouched();
+            vm.enfermedad = angular.copy(enfermedad);
+            vm.disabled=true;
         }
+        function buscar(){
 
-        /**
-         * Build `states` list of key/value pairs
-         */
-        function loadAll() {
-            /* jshint multistr: true */
-            var allStates = 'Francisco Javier Cerda Martínez, Edgar Larios Tapia, Chadwick Carreto Arellano, \
-                 Daniel Zuriel Franco Rodríguez, Sandra Bautista, Luis Enrique Olvera, Fernando Cerda,\
-                Daniel Pérez Pérez';
+        };
+        function verMas(persona) {
 
-            return allStates.split(/, +/g).map(function (state) {
-                return {
-                    value: state.toLowerCase(),
-                    display: state
-                };
+            obtenerAlergias(persona);
+            obtenerVacunas(persona);
+            obtenerEnfermededaes(persona);
+        }
+        function obtenerEnfermededaes(persona) {
+            vm.enfermedadPersona=[];
+            Enfermedad.getEnfermedadesByPerson(persona).then(function (res) {
+                vm.enfermedadesPersona=res;
+                res.forEach(function (value) {
+                    vm.enfermedadPersona.push(value.enfermedad_name);
+                });
+            });
+        }
+        function obtenerAlergias(persona) {
+            vm.alergiaPersona=[];
+            Alergia.getAlergiasByPerson(persona).then(function (res) {
+                vm.alergiaPersona=res;
+                res.forEach(function (value) {
+                    vm.enfermedadPersona.push(value.enfermedad_name);
+                });
+            });
+        }
+        function obtenerVacunas(persona) {
+            vm.vacunaPersona=[];
+            Vacunas.getEnfermedadesByPerson(persona).then(function (res) {
+                vm.vacunaPersona=res;
+                res.forEach(function (value) {
+                    vm.vacunaPersona.push(value.vacuna_name);
+                });
             });
         }
 
-        /**
-         * Create filter function for a query string
-         */
-        function createFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
-
-            return function filterFn(state) {
-                return (state.value.indexOf(lowercaseQuery) === 0);
-            };
+        function querySearch(query) {
+            var results = query ? lookup(query) : vm.personas;
+            return results;
 
         }
 
-        vm.selected = [];
-
-        vm.query = {
-            order: 'name',
-            limit: 5,
-            page: 1
-        };
-        vm.success=success;
-        function success(vacunas) {
-            vm.vacunas = vacunas;
+        function lookup(search_text) {
+            vm.search_items = _.filter(vm.personas, function (item) {
+                return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
+            });
+            return vm.search_items;
         }
-
-        vm.vacunas = [{
-            name: 'BCG',
-            dosis: 'Unica',
-            fecha:'19-08-1993'
-        }, {
-            name: 'Hepatitis B',
-            dosis: '3ª',
-            fecha:'19-02-1994'
-        },{
-            name: 'Pentavalente Acelular (DPat+VPI+HIB)',
-            dosis: '4º',
-            fecha:'19-02-1995'
-        },{
-            name: 'DPT',
-            dosis: 'Refuerzo',
-            fecha:'19-08-2012'
-        },{
-            name: 'Influenza',
-            dosis: 'Unica',
-            fecha:'19-12-2015'
-        }
-        ];
-        vm.alergias = [{
-            id: '1',
-            name: 'Penicilina'
-
-
-        }, {
-            id: '2',
-            name: 'Sulfas'
-        },{
-            id: '3',
-            name: 'Ambroxol'
-        },{
-            id: '4',
-            name: 'Lorantadina'
-        },{
-            id: '123',
-            name: 'Camarones'
-        }
-        ];
-        vm.types = [{
-            id: '1',
-            value: 'General'
-
-        }, {
-            id: '2',
-            value: 'Dentista'
-        },{
-            id: '3',
-            value: 'Psicología'
-        },{
-            id: '4',
-            value: 'Orientacion'
-        }
-        ];
-        vm.enfermedades = [{
-            id: '1',
-            value: 'Asma'
-
-
-        }
-        ];
-
-        // init
-
 
     }
+
+
 })();

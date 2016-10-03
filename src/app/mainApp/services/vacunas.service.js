@@ -16,7 +16,8 @@
             list:list,
             update:update,
             create:create,
-            remove:remove
+            remove:remove,
+            getVacunasByPerson:getVacunasByPerson
         };
 
 
@@ -35,6 +36,9 @@
 
         function remove(object) {
             return baseVacuna.customDELETE(object.id,null,{'content-type':'application/json'});
+        }
+        function getVacunasByPerson(person) {
+            return baseVacuna.one('person',person.id).getList();
         }
 
     }
