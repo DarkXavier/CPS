@@ -31,7 +31,7 @@
                                                required=""
                                                md-no-asterisk="">
                                         <md-option ng-repeat="item in vm.unidadesMedicas"
-                                                   value="{{item.id}}">
+                                                   ng-value="{{item}}">
                                             <span>{{item.nombre}}</span>
                                         </md-option>
                                     </md-select>
@@ -46,7 +46,7 @@
                                                required=""
                                                md-no-asterisk="">
                                         <md-option ng-repeat="item in vm.tiposServicio"
-                                                   value="{{item.id}}">
+                                                   ng-value="{{item}}">
                                             <span>{{item.nombre}}</span>
                                         </md-option>
                                     </md-select>
@@ -54,26 +54,45 @@
                                         <div ng-message="required">El campo es requerido</div>
                                     </div>
                                 </md-input-container>
+                                <md-input-container flex="100" class="md-block">
+                                    <label>Consultorio</label>
+                                    <md-select name="selectConsultorio"
+                                               ng-model="vm.consultorio"
+                                               required=""
+                                               md-no-asterisk=""
+                                               md-on-open="vm.getConsultorios()"
+                                               ng-disabled="vm.tipoServicio==null || vm.unidadMedica==null">
+                                        <md-option ng-repeat="item in vm.consultorios"
+                                                   ng-value="{{item}}">
+                                            <span>{{item.identificador}}</span>
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="formGeneral.selectConsultorio.$error">
+                                        <div ng-message="required">El campo es requerido</div>
+                                    </div>
+                                </md-input-container>
                             </div>
-                            <md-input-container flex="100" class="md-block">
-                                <label>Consultorio</label>
-                                <md-select name="selectConsultorio"
-                                           ng-model="vm.consultorio"
-                                           required=""
-                                           md-no-asterisk=""
-                                           md-on-open="vm.getConsultorios()"
-                                           ng-disabled="vm.tipoServicio==null || vm.unidadMedica==null">
-                                    <md-option ng-repeat="item in vm.consultorios"
-                                               value="{{item.id}}">
-                                        <span>{{item.identificador}}</span>
-                                    </md-option>
-                                </md-select>
-                                <div ng-messages="formGeneral.selectConsultorio.$error">
-                                    <div ng-message="required">El campo es requerido</div>
-                                </div>
-                            </md-input-container>
                         </form>
                     </md-content>
+                </md-tab>
+                <md-tab>
+                    <form name="formCita">
+                        <md-input-container flex="100" class="md-block">
+                            <label>Consultorio</label>
+                            <md-select name="selectPersona"
+                                       ng-model="vm.persona"
+                                       required=""
+                                       md-no-asterisk="">
+                                <md-option ng-repeat="item in vm.personas"
+                                           ng-value="{{item}}">
+                                    <span>{{item.identificador}}</span>
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="formGeneral.selectConsultorio.$error">
+                                <div ng-message="required">El campo es requerido</div>
+                            </div>
+                        </md-input-container>
+                    </form>
                 </md-tab>
                 <md-tab label="Información de cita" ng-disabled="formGeneral.$invalid">
 

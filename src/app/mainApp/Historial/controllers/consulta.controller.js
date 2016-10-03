@@ -6,7 +6,7 @@
         .module('app.mainApp.historial')
         .controller('consultaController',consultaController);
 
-    function consultaController(UnidadServicio, TipoServicio, Consultorio){
+    function consultaController($timeout, UnidadServicio, TipoServicio, Consultorio){
         var vm = this;
 
         //Functions
@@ -15,6 +15,7 @@
         vm.unidadMedica=null;
         vm.tipoServicio=null;
         vm.consultorio=null;
+        vm.persona=null;
 
         activate();
 
@@ -24,9 +25,17 @@
         }
 
         function getConsultorios() {
-            vm.consultorios=Consultorio.getByUnidadTipo(vm.tipoServicio.id,vm.unidadMedica.id);
-            console.log(vm.consultorios);
+            return $timeout(function(){
+                console.log(vm.tipoServicio);
+                console.log(vm.unidadMedica);
+                Consultorio.getByUnidadTipo(vm.tipoServicio.id,vm.unidadMedica.id).then(function (res) {
+                    vm.consultorios= res;
+                }).catch(function (err) {
+                    console.log(err);
 
+                });
+                console.log(vm.consultorios);
+            },500);
         }           
 
 
