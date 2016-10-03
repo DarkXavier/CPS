@@ -9,7 +9,7 @@
         .module('app.mainApp.historial')
         .controller('carnetreviewController', carnetreviewController);
 
-    function carnetreviewController($timeout, $q, $log,Vacunas,PersonaEnfermedad,Persona) {
+    function carnetreviewController($timeout, $q, $log,Vacunas,Enfermedad,Persona,PersonaMedicos,Alergia) {
         var vm = this;
 
         vm.lookup = lookup;
@@ -20,6 +20,7 @@
         vm.search_items = [];
         vm.enfermedadPersona=[];
         vm.vacunaPersona=[];
+        vm.datosMedicos;
         vm.alergiaPersona=[];
         vm.searchText = '';
         var enfermedad = {
@@ -59,6 +60,9 @@
             vm.disabled=true;
         }
         function buscar(){
+            PersonaMedicos.getMedicosByPerson(persona).then(function (res) {
+                vm.datosMedicos=res;
+            })
 
         };
         function verMas(persona) {
