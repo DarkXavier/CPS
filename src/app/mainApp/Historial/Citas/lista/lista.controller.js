@@ -7,9 +7,9 @@
     angular
         .module('app.mainApp.historial')
         .controller('ListadoCitasController', ListadoCitasController)
-        .filter('eventosSearch', custom);
+        .filter('citaSearch', custom);
 
-    function ListadoCitasController( Translate) {
+    function ListadoCitasController(UTILS,Agenda, Translate,Persona,Consultorio,UnidadServicio,TipoServicio) {
         var vm = this;
 
         vm.lookup = lookup;
@@ -17,11 +17,16 @@
         vm.selectedItems = selectedItems;
         vm.formatDate=formatDate;
         vm.search_items = [];
+        vm.formato="DD-MM-YYYY";
         vm.searchText = '';
-        var evento = {
-            consultorio: null,
-            unidad_servicio: null,
-            fecha:null
+        var evento={
+            medico:null,
+            hora_inicio:null,
+            hora_termino:null,
+            dia:null,
+            consultorio:null,
+            unidad_servicio:null,
+            tipo_servicio:null
         };
         vm.evento = angular.copy(evento);
         vm.numberBuffer = '';
@@ -38,39 +43,8 @@
         }
 
         function activate() {
-            //vm.eventos=Alergia.list();
-            vm.eventos = [
-                {
-                    consultorio: 'Consultorio 1',
-                    unidad_servicio: 'Zacatenco',
-                    fecha: moment().add(1, 'h').format('DD/MM/YYYY HH:mm:ss')
-                },
-                {
-                    consultorio: 'Consultorio 2',
-                    unidad_servicio: 'Libre',
-                    fecha: moment().add(3, 'h').format('DD/MM/YYYY HH:mm:ss')
-                },
-                {
-                    consultorio: 'Consultorio 3',
-                    unidad_servicio: 'Zacatenco',
-                    fecha: moment().add(5, 'h').format('DD/MM/YYYY HH:mm:ss')
-                },
-                {
-                    consultorio: 'Consultorio 4',
-                    unidad_servicio: 'Libre',
-                    fecha: moment().add(7, 'h').format('DD/MM/YYYY HH:mm:ss')
-                },
-                {
-                    consultorio: 'Consultorio 5',
-                    unidad_servicio: 'Zacatenco',
-                    fecha: moment().add(9, 'h').format('DD/MM/YYYY HH:mm:ss')
-                },
-                {
-                    consultorio: 'Consultorio 6',
-                    unidad_servicio: 'Libre',
-                    fecha: moment().add(11, 'h').format('DD/MM/YYYY HH:mm:ss')
-                }
-            ];
+            vm.citas=Agenda.getMyCitas();
+            vm.personas = Persona.list();
         }
 
        function formatDate(date){
@@ -79,17 +53,31 @@
         }
         function selectedItems(project) {
             vm.selectedList = project;
-            vm.evento = angular.copy(project);
+            vm.evento.consultorio=Consultorio.get(project.consultorio_horario.consultorio);
+            vm.evento.dia=UTILS.week[project.consultorio_horario.dia].value;
+            vm.evento.fecha=moment(project.fecha).format(vm.formato);
+            vm.evento.hora_inicio=project.hora_inicio;
+            vm.evento.hora_termino=project.hora_termino;
+            vm.evento.medico=_.find(vm.personas, function(item) {
+                return item.id== project.medico;
+            });
+            vm.evento.medico=vm.evento.medico.nombre+" "+vm.evento.medico.apellido_paterno+" "+vm.evento.medico.apellido_materno;
+            UnidadServicio.get(vm.evento.consultorio.unidad_servicio).then(function (res) {
+                vm.evento.unidad_servicio=res[0];
+            });
+            TipoServicio.get(vm.evento.consultorio.tipo_servicio).then(function (res) {
+                vm.evento.tipo_servicio=res[0];
+            });
         }
 
         function querySearch(query) {
-            var results = query ? lookup(query) : vm.eventos;
+            var results = query ? lookup(query) : vm.citas;
             return results;
 
         }
 
         function lookup(search_text) {
-            vm.search_items = _.filter(vm.eventos, function (item) {
+            vm.search_items = _.filter(vm.citas, function (item) {
                 return item.consultorio.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
             });
             return vm.search_items;

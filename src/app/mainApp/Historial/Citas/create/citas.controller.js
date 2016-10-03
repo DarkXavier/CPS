@@ -105,9 +105,6 @@
             uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('render')
 
         }
-        function querySearch(query) {
-            return query ? vm.pacientes.filter(createFilterFor(query)) : vm.pacientes;
-        }
 
         function searchTextChange(text) {
             $log.info('Texto cambiado a ' + text);
@@ -122,7 +119,6 @@
             var end=uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('getView').end.subtract(1,'day').format("YYYY-MM-DD");
             Consultorio.getHorariosInterval(vm.consultorio,start,end).then(function (res) {
                 vm.eventos=res;
-                console.log(vm.eventos.length);
                 activate();
             });
 
@@ -131,7 +127,6 @@
             Consultorio.getByUnidadTipo(vm.tipo_servicio,vm.servicio).then(function (res) {
                 vm.consultorios=res;
             });
-
         }
         /**
          * Create filter function for a query string
@@ -143,6 +138,16 @@
                 return (state.nombre.indexOf(lowercaseQuery) === 0);
             };
 
+        }
+        function querySearch(query) {
+            return query ? lookup(query) :vm.pacientes;
+        }
+
+        function lookup(search_text) {
+            vm.search_items = _.filter(vm.pacientes, function (item) {
+                return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
+            });
+            return vm.search_items;
         }
 
 
@@ -223,4 +228,5 @@
         }
 
     }
+
 })();

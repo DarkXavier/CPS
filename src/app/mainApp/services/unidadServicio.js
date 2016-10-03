@@ -6,40 +6,38 @@
 
     angular
         .module('app.mainApp')
-        .factory('UnidadServicio',UnidadServicio);
+        .factory('UnidadServicio', UnidadServicio);
 
-    function UnidadServicio(Restangular)
-    {
-        var baseEnfermedad= Restangular.all('unidad_servicio');
+    function UnidadServicio(Restangular) {
+        var baseEnfermedad = Restangular.all('unidad_servicio');
 
         return {
-            list:list,
-            update:update,
-            create:create,
-            remove:remove
+            list: list,
+            update: update,
+            create: create,
+            remove: remove,
+            get: get
         };
 
+        function get(id) {
+            return baseEnfermedad.customGET(id);
+        }
 
-        function list(){
+        function list() {
             return baseEnfermedad.getList().$object;
         }
 
-        function update(object)
-        {
+        function update(object) {
             return baseEnfermedad.all(object.id).customPUT(object);
         }
 
-        function create(object){
+        function create(object) {
             return baseEnfermedad.post(object);
         }
 
         function remove(object) {
-            return baseEnfermedad.customDELETE(object.id,null,{'content-type':'application/json'});
+            return baseEnfermedad.customDELETE(object.id, null, {'content-type': 'application/json'});
         }
-
-
-
-
 
 
         return service;

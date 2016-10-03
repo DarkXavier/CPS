@@ -16,14 +16,17 @@
             update: update,
             create: create,
             remove: remove,
-            get: get
+            get: get,
+            getMyCitas:getMyCitas
         };
 
 
         function list() {
             return baseUrl.getList().$object;
         }
-
+        function getMyCitas() {
+            return baseUrl.one('my_agenda').getList().$object;
+        }
         function get() {
             return baseUrl.customGET().$object;
 
