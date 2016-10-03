@@ -11,12 +11,14 @@
 
     function carnetreviewController($timeout, $q, $log,Vacunas,Enfermedad,Persona,PersonaMedicos,Alergia) {
         var vm = this;
-
+        //Funciones
         vm.lookup = lookup;
         vm.querySearch = querySearch;
         vm.verMas = verMas;
         vm.cancel = cancel;
         vm.enable=enable;
+        vm.buscar=buscar;
+        //Variables
         vm.search_items = [];
         vm.enfermedadPersona=[];
         vm.vacunaPersona=[];
@@ -32,6 +34,8 @@
         vm.disabled=true;
         activate();
         init();
+
+
         function init() {
             vm.successTitle = Translate.translate('MAIN.MSG.SUCCESS_TITLE');
             vm.errorTitle = Translate.translate('MAIN.MSG.ERROR_TITLE');
