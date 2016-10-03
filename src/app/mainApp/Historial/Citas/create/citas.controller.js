@@ -14,6 +14,7 @@
         vm.fecha_inicio = null;
         vm.isPacient=Session.userRole==="Paciente";
         vm.fecha_fin = null;
+        vm.loadingCalendario=false;
         vm.calendarOptions = {
             defaultView: 'agendaWeek',
             contentHeight: 'auto',
@@ -115,10 +116,13 @@
         }
 
         function buscar() {
-            var start=uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('getView').start.format("YYYY-MM-DD");
+            //var start=uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('getView').start.format("YYYY-MM-DD");
+            var start=moment().format("YYYY-MM-DD");
+
             var end=uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('getView').end.subtract(1,'day').format("YYYY-MM-DD");
             Consultorio.getHorariosInterval(vm.consultorio,start,end).then(function (res) {
                 vm.eventos=res;
+
                 activate();
             });
 
@@ -161,7 +165,11 @@
             if(vm.isPacient){
                 vm.selectedPacient=Persona.get();
             }else {
-                vm.pacientes = Persona.list();
+                Persona.listEsp().then(function (res) {
+                    vm.pacientes= _.filter(res, function (item) {
+                        return !(item.id == Session.userInformation.id);
+                    });
+                });
                 vm.medico=Persona.get();
             }
             vm.unidad_servicio=UnidadServicio.list();
@@ -169,7 +177,7 @@
 
         }
         function activate() {
-
+            vm.loadingCalendario=true;
             vm.eventSources[0].events.splice(0, vm.eventSources[0].events.length);
 
             vm.eventos.forEach(function (consultorio) {
@@ -206,7 +214,7 @@
 
             });
             uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('refetchEvents');
-
+            vm.loadingCalendario=false;
         }
 
 
@@ -214,7 +222,7 @@
             if (status === 'Ocupado') {
                 return 'red';
             } else if (status === 'Libre') {
-                return 'green';
+                return 'grey';
             }
 
         }
