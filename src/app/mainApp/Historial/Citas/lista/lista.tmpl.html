@@ -34,16 +34,17 @@
                     </md-autocomplete>
                     <md-virtual-repeat-container class="vertical-container" layout-fill="">
                         <md-list class="inbox-list">
-                            <md-list-item ng-repeat="eventos in vm.eventos | eventosSearch:vm.searchText"
+                            <md-list-item ng-repeat="cita in vm.citas | citaSearch:vm.searchText"
                                           class="inbox-list__email inbox-list__email--animated md-3-line md-long-text">
-                                <md-button ng-click="vm.selectedItems(eventos)" layout-padding layout="row"
+                                <md-button ng-click="vm.selectedItems(cita)" layout-padding layout="row"
                                            layout-align="start center"
-                                           ng-class="{'inbox-list__email--active' : eventos === vm.selectedList }">
+                                           ng-class="{'inbox-list__email--active' : cita === vm.selectedList }">
                                     <md-icon md-svg-icon="assets/images/hospital.svg" class="md-avatar"></md-icon>
 
                                     <div class="md-list-item-text" layout="column">
-                                        <h3><b>Consultorio:</b> {{eventos.consultorio }}</h3>
-                                        <h4><b>Fecha:</b> {{eventos.fecha}}</h4>
+                                        <!--<h3><b>Consultorio:</b> {{cita.consultorio }}</h3>-->
+                                        <h4><b>Fecha:</b>{{cita.fecha|  date:'MM/dd/yyyy'}}</h4>
+
                                     </div>
                                 </md-button>
                                 <md-divider></md-divider>
@@ -62,7 +63,7 @@
                         <md-input-container class="md-block">
                             <label>Consultorio</label>
                             <input ng-required='true' type="text" name="nombre" readonly
-                                   ng-model="vm.evento.consultorio"/>
+                                   ng-model="vm.evento.consultorio.identificador"/>
                             <div ng-messages="ListaForm.nombre.$error">
                                 <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
@@ -71,7 +72,15 @@
                         <md-input-container class="md-block">
                             <label>Unidad de Servicio</label>
                             <input md-no-asterisk="" required="" type="text" name="unidad_servicio" readonly
-                                   ng-model="vm.evento.unidad_servicio"/>
+                                   ng-model="vm.evento.unidad_servicio.nombre"/>
+                            <div ng-messages="ListaForm.unidad_servicio.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Medico</label>
+                            <input md-no-asterisk="" required="" type="text" name="unidad_servicio" readonly
+                                   ng-model="vm.evento.medico"/>
                             <div ng-messages="ListaForm.unidad_servicio.$error">
                                 <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>
@@ -79,7 +88,23 @@
                         <md-input-container class="md-block">
                             <label>Fecha</label>
                             <input md-no-asterisk="" required="" type="text" name="descripcion" readonly
-                                   ng-model="vm.evento.fecha"/>
+                                   ng-model="vm.evento.fecha" />
+                            <div ng-messages="ListaForm.fecha.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Hora inicio</label>
+                            <input md-no-asterisk="" required="" type="text" name="descripcion" readonly
+                                   ng-model="vm.evento.hora_inicio"  />
+                            <div ng-messages="ListaForm.fecha.$error">
+                                <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Hora termino</label>
+                            <input md-no-asterisk="" required="" type="text" name="descripcion" readonly
+                                   ng-model="vm.evento.hora_termino" />
                             <div ng-messages="ListaForm.fecha.$error">
                                 <div ng-message="required">{{'MAIN.GENERAL.REQUIRED_FIELD'|translate}}</div>
                             </div>

@@ -6,10 +6,10 @@
 
     angular
         .module('app.mainApp')
-        .factory('Persona', Persona);
+        .factory('Consultorio', Consultorio);
 
-    function Persona(Restangular) {
-        var baseEnfermedad = Restangular.all('persona');
+    function Consultorio(Restangular) {
+        var baseEnfermedad = Restangular.all('consultorio');
 
         return {
             list: list,
@@ -17,18 +17,22 @@
             create: create,
             remove: remove,
             get: get,
-            listEsp:listEsp
+            getByUnidadTipo: getByUnidadTipo,
+            getHorariosInterval:getHorariosInterval
         };
-
+        function getHorariosInterval(idConsultorio,fecha_inicio,fecha_termino) {
+            return baseEnfermedad.all(idConsultorio).one('calendario',fecha_inicio).customGET(fecha_termino);
+        }
+        function getByUnidadTipo(tipo,unidad) {
+            return baseEnfermedad.one('tipo',tipo).one('unidad',unidad).customGET();
+        }
 
         function list() {
             return baseEnfermedad.all('list').getList().$object;
         }
-        function listEsp() {
-            return baseEnfermedad.all('list').getList();
-        }
-        function get() {
-            return baseEnfermedad.customGET().$object;
+
+        function get(id) {
+            return baseEnfermedad.get(id).$object;
 
         }
 
@@ -45,8 +49,6 @@
             return baseEnfermedad.customDELETE(object.id, null, {'content-type': 'application/json'});
         }
 
-
-        return service;
     }
 
 })();

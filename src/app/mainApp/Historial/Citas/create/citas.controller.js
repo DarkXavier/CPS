@@ -8,37 +8,13 @@
         .module('app.mainApp.historial')
         .controller('CitasController', CitasController);
 
-    function CitasController($timeout, $q, $log, $rootScope,triTheming , $mdDialog, $mdToast, $filter, triLayout, uiCalendarConfig) {
+    function CitasController(UnidadServicio,TipoServicio,Agenda,Consultorio, $mdDialog,Session,$log, $rootScope,triTheming , Persona, $mdToast, $filter, triLayout, uiCalendarConfig) {
         var vm = this;
-        vm.pacientes = [
-            {
-                id: 0,
-                nombre: "adan",
-                apellido_paterno: "amezcua",
-                apellido_materno: "aguilar",
-                telefono: "2323232",
-                foto: ""
-
-            },
-            {
-                id: 1,
-                nombre: "Emmanuel",
-                apellido_paterno: "Plata",
-                apellido_materno: "Negrete",
-                telefono: "2323232",
-                foto: ""
-
-            }, {
-                id: 2,
-                nombre: "Jorge Erik",
-                apellido_paterno: "Montiel",
-                apellido_materno: "Arguijo",
-                telefono: "2323232",
-                foto: ""
-
-            }];
+        vm.pacientes = [];
         vm.fecha_inicio = null;
+        vm.isPacient=Session.userRole==="Paciente";
         vm.fecha_fin = null;
+        vm.loadingCalendario=false;
         vm.calendarOptions = {
             defaultView: 'agendaWeek',
             contentHeight: 'auto',
@@ -47,15 +23,10 @@
             header: false,
             lang: 'es-mx',
             timeFormat: ' ',
-            /*monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
-             monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
-             dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
-             dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],*/
             viewRender: function (view) {
                 // change day
                 vm.currentDay = view.calendar.getDate();
                 vm.currentView = view.name;
-                activate();
                 // update toolbar with new day for month name
                 $rootScope.$broadcast('calendar-changeday', vm.currentDay);
                 // update background image for month
@@ -66,107 +37,37 @@
                 vm.currentDay = date;
             },
             eventClick: function (calEvent, jsEvent, view) { //eslint-disable-line
-                /*console.log(calEvent._id);
-                console.log(calEvent);*/
+                console.log(calEvent);
+                var confirm = $mdDialog.confirm()
+                    .title('Confirmación para cita')
+                    .textContent('¿Esta seguro de seleccionar este horario?')
+                    .ariaLabel('Lucky day')
+                    .targetEvent(jsEvent)
+                    .ok('Aceptar')
+                    .cancel('Cancelar');
+                $mdDialog.show(confirm).then(function() {
+                    Agenda.create(calEvent.consultorio).then(function (res) {
+                        clear();
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .content($filter('triTranslate')("Se ha confirmado tu cita con éxito "))
+                                .position('bottom right')
+                                .hideDelay(2000)
+                        );
+                    }).catch(function (res) {
+                        console.log(res);
+                    });
 
-                eliminar(calEvent._id);
-            },
-            events: function (start, end, callback) {
-                vm.fecha_inicio = moment();
-                vm.fecha_fin = end;
+                }, function() {
 
-            },
-            select:function(start, end, allDay) {
-                vm.fecha_selection_start=start;
-                vm.fecha_selection_end=end;
-                var mockup = {
-                    title: "Adan Amezcua",
-                    allDay: false,
-                    start: start,
-                    end: end,
-                    backgroundColor: triTheming.rgba(triTheming.palettes['red']['500'].value),
-                    borderColor: triTheming.rgba(triTheming.palettes['red']['500'].value),
-                    textColor: triTheming.rgba(triTheming.palettes['red']['500'].contrast),
-                    palette: 'red'
-                };
-                vm.eventSources[0].events.push(mockup);
+                });
             }
         };
-        vm.consultorios = [
-            {
-                id: 0,
-                nombre: 'Consultorio 1'
-            }, {
-                id: 1,
-                nombre: 'Consultorio 2'
-            }, {
-                id: 2,
-                nombre: 'Consultorio 3'
-            }];
-        vm.unidad_servicio = [
-            {
-                id: 0,
-                name: 'ESCOM'
-            }
-            , {
-                id: 1,
-                name: 'ESIME-Zacatenco'
-            }, {
-                id: 0,
-                name: 'ESIA-Zacatenco'
-            }];
-        vm.tipo_unidad_servicio = [
-            {
-                id: 0,
-                name: "Psicología"
-            }
-            , {
-                id: 1,
-                name: "Dentista"
-            },
-            {
-                id: 2,
-                name: "Médico"
-            }];
-        vm.eventos = [
-            {
-                pacient: 'Paciente 1',
-                type: 'Ocupado',
-                fecha: moment().add(1, 'h'),
-                allDay: false
-            },
-            {
-                pacient: 'Paciente 2',
-                type: 'Libre',
-                fecha: moment().add(3, 'h'),
-                allDay: false
-            },
-            {
-                pacient: 'Paciente 3',
-                type: 'Ocupado',
-                fecha: moment().add(5, 'h'),
-                allDay: false
-            },
-            {
-                pacient: 'Paciente 4',
-                type: 'Libre',
-                fecha: moment().add(7, 'h'),
-                allDay: false
-            },
-            {
-                pacient: 'Paciente 5',
-                type: 'Ocupado',
-                fecha: moment().add(9, 'h'),
-                allDay: false
-            },
-            {
-                pacient: 'Paciente 6',
-                type: 'Libre',
-                fecha: moment().add(11, 'h'),
-                allDay: false
 
-            }
-        ];
+        vm.consultorios = [];
+        vm.unidad_servicio = [];
+        vm.tipo_unidad_servicio = [];
+        vm.eventos = [];
 
 
         //uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
@@ -182,9 +83,12 @@
         vm.eventSources = [{
             events: []
         }];
+        init();
+
         vm.querySearch = querySearch;
         vm.selectedItemChange = selectedItemChange;
         vm.searchTextChange = searchTextChange;
+        vm.unidadSelect=unidadSelect;
         vm.changeMonth = changeMonth;
         vm.buscar = buscar;
         vm.eliminar=eliminar;
@@ -202,15 +106,6 @@
             uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('render')
 
         }
-        function querySearch(query) {
-            var results = query ? vm.pacientes.filter(createFilterFor(query)) : vm.pacientes, deferred;
-
-            deferred = $q.defer();
-            $timeout(function () {
-                deferred.resolve(results);
-            }, Math.random() * 1000, false);
-            return deferred.promise;
-        }
 
         function searchTextChange(text) {
             $log.info('Texto cambiado a ' + text);
@@ -221,16 +116,22 @@
         }
 
         function buscar() {
-            //uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
-            vm.showCalendar = true;
-            $mdToast.show(
-                $mdToast.simple()
-                    .content($filter('triTranslate')("Se ha confirmado tu cita con éxito "))
-                    .position('bottom right')
-                    .hideDelay(2000)
-            );
-        }
+            //var start=uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('getView').start.format("YYYY-MM-DD");
+            var start=moment().format("YYYY-MM-DD");
 
+            var end=uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('getView').end.subtract(1,'day').format("YYYY-MM-DD");
+            Consultorio.getHorariosInterval(vm.consultorio,start,end).then(function (res) {
+                vm.eventos=res;
+
+                activate();
+            });
+
+        }
+        function unidadSelect() {
+            Consultorio.getByUnidadTipo(vm.tipo_servicio,vm.servicio).then(function (res) {
+                vm.consultorios=res;
+            });
+        }
         /**
          * Create filter function for a query string
          */
@@ -242,38 +143,78 @@
             };
 
         }
+        function querySearch(query) {
+            return query ? lookup(query) :vm.pacientes;
+        }
+
+        function lookup(search_text) {
+            vm.search_items = _.filter(vm.pacientes, function (item) {
+                return item.nombre.toLowerCase().indexOf(search_text.toLowerCase()) >= 0;
+            });
+            return vm.search_items;
+        }
 
 
         function changeMonth(direction) {
-            uiCalendarConfig.calendars['triangular-calendar'].fullCalendar(direction);
+             uiCalendarConfig.calendars['triangular-calendar'].fullCalendar(direction);
+            buscar();
         }
 
-        /*
-         angular.element('.calendar').fullCalendar('changeView', 'agendaWeek');
-         setTimeout(function () {
-         //uiCalendarConfig.calendars.myCalendar.fullCalendar('changeView', 'agendaWeek' );
-         uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('changeView', 'agendaWeek');
-         }, 200);*/
 
+        function init() {
+            if(vm.isPacient){
+                vm.selectedPacient=Persona.get();
+            }else {
+                Persona.listEsp().then(function (res) {
+                    vm.pacientes= _.filter(res, function (item) {
+                        return !(item.id == Session.userInformation.id);
+                    });
+                });
+                vm.medico=Persona.get();
+            }
+            vm.unidad_servicio=UnidadServicio.list();
+            vm.tipo_unidad_servicio=TipoServicio.list();
+
+        }
         function activate() {
+            vm.loadingCalendario=true;
             vm.eventSources[0].events.splice(0, vm.eventSources[0].events.length);
 
-            vm.eventos.forEach(function (value) {
-                var color = getBrackground(value.type);
-                var mockup = {
-                    title: value.pacient,
-                    allDay: false,
-                    start: value.fecha,
-                    end: value.fecha.add(1, 'h'),
-                    backgroundColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
-                    borderColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
-                    textColor: triTheming.rgba(triTheming.palettes[color]['500'].contrast),
-                    palette: color
-                };
-                vm.eventSources[0].events.push(mockup);
-            });
-            console.log(vm.eventos);
+            vm.eventos.forEach(function (consultorio) {
+                var fecha=moment(consultorio.fecha);
+                var color = getBrackground('Libre');
+                consultorio.horarios_disponibles.forEach(function (value) {
+                    var hora_inicio=moment(value.inicio,"HH:mm:ss");
+                    var hora_termino=moment(value.termino,"HH:mm:ss");
+                    var fecha_inicio=angular.copy(fecha);
+                    fecha_inicio.set({ hour:hora_inicio.get('hour'), minute: hora_inicio.get('minute'), second: hora_inicio.get('second'), millisecond: hora_inicio.get('millisecond') });
+                    var fecha_termino=angular.copy(fecha);
+                    fecha_termino.set({ hour:hora_termino.get('hour'), minute: hora_termino.get('minute'), second: hora_termino.get('second'), millisecond: hora_termino.get('millisecond') });
+                    var agenda={
+                        "fecha": consultorio.fecha,
+                        "hora_inicio": value.inicio,
+                        "hora_termino": value.termino,
+                        "consultorio_horario": value.id,
+                        "paciente": vm.selectedPacient.id,
+                        "medico": vm.isPacient?null:vm.medico.id
+                    };
+                    var mockup = {
+                        title: 'Libre',
+                        allDay: false,
+                        start: fecha_inicio,
+                        end:fecha_termino,
+                        consultorio: agenda,
+                        backgroundColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
+                        borderColor: triTheming.rgba(triTheming.palettes[color]['500'].value),
+                        textColor: triTheming.rgba(triTheming.palettes[color]['500'].contrast),
+                        palette: color
+                    };
+                    vm.eventSources[0].events.push(mockup);
+                });
 
+            });
+            uiCalendarConfig.calendars['triangular-calendar'].fullCalendar('refetchEvents');
+            vm.loadingCalendario=false;
         }
 
 
@@ -281,11 +222,19 @@
             if (status === 'Ocupado') {
                 return 'red';
             } else if (status === 'Libre') {
-                return 'green';
+                return 'grey';
             }
 
         }
-
+        function clear() {
+            vm.consultorio=null;
+            vm.servicio=null;
+            vm.tipo_servicio=null;
+            vm.selectedPacient=null;
+            vm.searchText=null;
+            init();
+        }
 
     }
+
 })();
